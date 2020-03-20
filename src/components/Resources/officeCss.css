@@ -1,0 +1,85 @@
+* {
+    -webkit-transition: 300ms;
+    transition: 300ms;
+}
+
+
+.office-card {
+    background: #ffffff;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    margin: 0em;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.office-header {
+    padding: 0;
+    margin: 0;
+    height: 367px;
+    width: 100%;
+    display: block;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.office-photo {
+    background-size:cover;
+
+}
+
+
+.office-card:hover {
+    -webkit-transform: scale(1.03);
+    transform: scale(1.03);
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.office-content {
+    padding: 8px 8px 8px 8px;
+    margin: 0;
+}
+
+.office-content-header, .office-info {
+
+    width: 100%;
+
+}
+
+.office-title {
+    font-size: 20px;
+    margin: 0;
+    display: table-cell;
+}
+
+
+.office-info {
+    margin-top: 15px;
+
+}
+
+.info-section-office {
+    display: table-cell;
+    text-align: center;
+
+}
+
+.info-section-office:first-of-type {
+    text-align: left;
+}
+
+.info-section-office:last-of-type {
+    text-align: right;
+}
+
+.info-section-office label {
+    display: block;
+    color: rgba(0, 0, 0, 0.5);
+    margin-bottom: .1em;
+    font-size: 13px;
+}
+
+.info-section-office div {
+    font-size: 12px;
+}

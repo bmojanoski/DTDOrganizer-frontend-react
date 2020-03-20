@@ -1,0 +1,127 @@
+
+
+* {
+    -webkit-transition: 300ms;
+    transition: 300ms;
+}
+
+.intro {
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+}
+
+h1, h2, h3, h4, h5, p {
+    font-weight: 100;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: #6ABCEA;
+}
+
+.container-card {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    max-width: 100%;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.movie-card {
+    background: #ffffff;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    margin: 0em;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.movie-header {
+    padding: 0;
+    margin: 0;
+    height: 300px;
+    width: 100%;
+    display: block;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.course-photo {
+    background: url("https://images.unsplash.com/photo-1509966756634-9c23dd6e6815?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=410&q=80");
+    background-size: cover;
+}
+.movie-photo {
+    background: url("https://images.unsplash.com/photo-1562240020-ce31ccb0fa7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80");
+    background-size: cover;
+}
+
+.header-icon-container {
+    position: relative;
+}
+
+.movie-card:hover {
+    -webkit-transform: scale(1.03);
+    transform: scale(1.03);
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.movie-content {
+    padding: 10px 10px 16px 10px;
+    margin: 0;
+}
+
+.movie-content-header, .movie-info {
+    display: table;
+    width: 100%;
+
+}
+
+.movie-title {
+    font-size: 18px;
+    margin: 0;
+    display: table-cell;
+}
+
+
+.movie-info {
+    margin-top: 5px;
+}
+
+.info-section {
+    display: table-cell;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.info-section:first-of-type {
+    text-align: left;
+}
+
+.info-section:last-of-type {
+    text-align: right;
+}
+
+.info-section label {
+    display: block;
+    color: rgba(0, 0, 0, 0.5);
+    margin-bottom: .1em;
+    font-size: 9px;
+}
+
+.info-section span {
+    font-weight: 700;
+    font-size: 11px;
+
+}
