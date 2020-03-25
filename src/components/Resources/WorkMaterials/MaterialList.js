@@ -1,13 +1,17 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 import ResourcesMenu from "../Menu/ResourcesMenu";
 
 import Checkbox from "../Office/Checkbox";
 
-import $ from 'jquery';
+
 import Material from "./Material";
 import {NavLink} from "react-router-dom";
 
+import {toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+toast.configure();
 class MaterialList extends React.Component {
 
     constructor(props) {
@@ -18,10 +22,6 @@ class MaterialList extends React.Component {
             checkedIds: []
         };
         this.handleChange = this.handleChange.bind(this);
-    }
-
-    componentDidMount() {
-        $(".alert").hide();
     }
 
     handleChange(e) {
@@ -37,7 +37,8 @@ class MaterialList extends React.Component {
 
     onFormSubmit = (e) => {
         e.preventDefault();
-        $(".alert").show();
+        if (this.state.checkedIds.length > 0) {
+            this.notifySuccess();
         const ai = Math.floor((Math.random() * 999999) + 1);
         var name = ai.toString();
         const newRequest = {
@@ -49,9 +50,28 @@ class MaterialList extends React.Component {
         this.props.onNewRequest(newRequest);
         this.setState(prevState => ({checkedItems: prevState.checkedItems = new Map()}));
         this.setState(prevState => ({checkedIds: prevState.checkedIds = []}));
-
+        } else {
+            this.notifyWarning();
+        }
     };
-
+    notifySuccess = () => {
+        toast.success('✅ Successfully requested items!', {
+            position: "bottom-center",
+            autoClose: 3000,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+        });
+    };
+    notifyWarning = () => {
+        toast.error('⚠️ Select at least one item!', {
+            position: "bottom-center",
+            autoClose: 3000,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+        });
+    };
     render() {
 
         return (
@@ -67,30 +87,9 @@ class MaterialList extends React.Component {
                             <form onSubmit={this.onFormSubmit}>
                                 <button type="submit"
                                         className="btn  btn-sm  btn-outline-primary request-alert"
-                                        data-toggle="modal"
-                                        data-target="#exampleModalCenter">Request selected items
+                                        >Request selected items
                                 </button>
                             </form>
-
-                            <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog"
-                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div className="modal-dialog modal-dialog-centered" role="document">
-                                    <div className="modal-content">
-                                        <div className="modal-header">
-                                            <h5 className="modal-title text-success" id="exampleModalLongTitle">
-                                                <b>Hooray!</b></h5>
-                                            <button type="button" className="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div className="modal-body">
-                                            Your request is successfully submitted!
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div className="col-1 p-0">
                             <span className="font-weight-light text-primary">OR</span>

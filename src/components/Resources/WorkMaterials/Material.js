@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../officeCss.css'
 const Material = (props) => {
     const { material } = props;

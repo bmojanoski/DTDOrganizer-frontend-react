@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import LibraryMenu from '../Menu/Menu'
 import Course from "./Course";
 

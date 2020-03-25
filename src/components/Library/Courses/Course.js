@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../Courses/courseCard.css'
 
 const Course = (props) => {
     const { course } = props;
 
     return (
-        <a className="text-reset" href={course.link}  target="_blank">
+        <a className="text-reset" href={course.link}  target="_blank" rel="noopener noreferrer">
             <div className="movie-card">
                 <div className="movie-header course-photo" >
                     <div className="header-icon-container">

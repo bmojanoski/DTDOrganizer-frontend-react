@@ -63,3 +63,27 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+@media only screen and (max-width: 770px) {
+  #root > div > div > div > div > div > div.fc-toolbar.fc-header-toolbar{
+    justify-items: center!important;
+    align-items: center!important;
+  }
+  div.fc-toolbar {
+    display: flex !important;
+    margin-left:10px;
+    margin-right:10px;
+  }
+
+  div.fc-toolbar.fc-header-toolbar > div.fc-center > h2 {
+    font-size: 15px !important;
+    width: 100px;
+    padding: 5px 5px !important;
+  }
+  div.fc-toolbar.fc-header-toolbar > div.fc-left > div > button {
+    padding: 5px 5px !important
+  }
+  div.fc-toolbar.fc-header-toolbar > div.fc-right > div > button {
+    padding: 5px 5px !important
+  }
+}

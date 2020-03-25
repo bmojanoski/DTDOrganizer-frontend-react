@@ -1,17 +1,19 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 import ResourcesMenu from "../Menu/ResourcesMenu";
 import Office from "./Office";
 import Checkbox from "./Checkbox";
 
-import $ from 'jquery';
 import {NavLink} from "react-router-dom";
 
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+toast.configure();
 class OfficeList extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             checkedItems: new Map(),
             checkedIds: []
@@ -19,41 +21,57 @@ class OfficeList extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-
     handleChange(e) {
         const item = e.target.name;
         const isChecked = e.target.checked;
         if (isChecked) {
             this.state.checkedIds.push(e.target.id);
-
         } else {
-
             this.state.checkedIds.pop(e.target.id);
         }
-
         this.setState(prevState => ({checkedItems: prevState.checkedItems.set(item, isChecked)}));
     }
 
     onFormSubmit = (e) => {
         e.preventDefault();
-        $(".alert").show();
-        const ai = Math.floor((Math.random() * 999999) + 1);
-        var name = ai.toString();
-        const newRequest = {
-            "request_name": name,
-            "id": this.state.checkedIds
-        };
 
+        if( this.state.checkedIds.length > 0 ){
+            this.notifySuccess();
+            const aii = Math.floor((Math.random() * 9999999) + 1);
+            let name = aii.toString();
+            const newRequest = {
+                "request_name": name,
+                "id": this.state.checkedIds
+            };
 
-        this.props.onNewRequest(newRequest);
-        this.setState(prevState => ({checkedItems: prevState.checkedItems = new Map()}));
-        this.setState(prevState => ({checkedIds: prevState.checkedIds = []}));
-
+            this.props.onNewRequest(newRequest);
+            this.setState(prevState => ({checkedItems: prevState.checkedItems = new Map()}));
+            this.setState(prevState => ({checkedIds: prevState.checkedIds = []}));
+        }else{
+            this.notifyWarning();
+        }
+    };
+    notifySuccess = () => {
+        toast.success('✅ Successfully requested items!',{
+            position: "bottom-center",
+            autoClose: 3000,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+        });
+    };
+    notifyWarning = () => {
+        toast.error('⚠️ Select at least one item!', {
+            position: "bottom-center",
+            autoClose: 3000,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+        });
     };
 
 
     render() {
-
         return (
             <div>
                 <div className="container ">
@@ -67,30 +85,11 @@ class OfficeList extends React.Component {
                             <form onSubmit={this.onFormSubmit}>
                                 <button type="submit"
                                         className="btn btn-sm btn-outline-primary request-alert"
-                                        data-toggle="modal"
-                                        data-target="#exampleModalCenter">Request selected items
+                                        >Request selected items
                                 </button>
                             </form>
 
-                            <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog"
-                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div className="modal-dialog modal-dialog-centered" role="document">
-                                    <div className="modal-content">
-                                        <div className="modal-header">
-                                            <h5 className="modal-title text-success" id="exampleModalLongTitle">
-                                                <b>Hooray!</b></h5>
-                                            <button type="button" className="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div className="modal-body">
-                                            Your request is successfully submitted!
-                                        </div>
 
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div className="col-1 p-0">
                             <span className="text-primary font-weight-light">OR</span>

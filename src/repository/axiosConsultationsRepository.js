@@ -1,5 +1,5 @@
 import axios from '../custom-axios/axios'
-import qs from 'qs'
+
 
 
 const DTDService = {
@@ -9,7 +9,7 @@ const DTDService = {
         return axios.get("/api/v1/books");
     },
     fetchBooksById: (isbn)=> {
-        return axios.get(`/api/v1/books/${isbn}`);
+        return axios.get(`/api/v1/books/`+isbn.isbn);
     },
     addBook: (book) => {
         return axios.post("/api/v1/books",book,{
@@ -76,6 +76,18 @@ const DTDService = {
         return axios.get("/api/v1/resources/utilities");
     },
 
+    //Events
+    fetchEvents: () => {
+        return axios.get("/api/v1/calendar");
+    },
+
+    updateEvent : (event) => {
+        return axios.put("/api/v1/calendar/"+ event.id, event,{
+            headers:{
+                'Content-Type' : 'application/json'
+            }
+        });
+    }
 
 
 

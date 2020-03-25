@@ -22,6 +22,7 @@ import UtilityList from "../Resources/Utilities/UtilityList";
 import ResourcesAdd from "../Resources/ResourcesAdd";
 import Calendar from "../Calendar/Calendar";
 
+
 class App extends Component {
 
     constructor(props) {
@@ -30,9 +31,10 @@ class App extends Component {
             bookList: [],
             courseList: [],
             documentList: [],
-            officeList:[],
-            wMaterialsList:[],
-            utilitiesList:[]
+            officeList: [],
+            wMaterialsList: [],
+            utilitiesList: [],
+            eventsList: []
         }
     }
 
@@ -45,7 +47,6 @@ class App extends Component {
         this.loadUtilities();
 
     }
-
     //BOOKS
     loadBooks = () => {
         DTDService.fetchBooks().then((response) => {
@@ -71,6 +72,7 @@ class App extends Component {
         DTDService.fetchCourses().then((response) => {
             this.setState({
                 courseList: response.data
+
             });
         });
     };
@@ -141,17 +143,17 @@ class App extends Component {
         DTDService.addResource(resource).then((response) => {
             const newResource = response.data;
             this.setState((prevState) => {
-                if(newResource.resourceType === "Office"){
+                if (newResource.resourceType === "Office") {
                     const newOfficeRef = [...prevState.officeList, newResource];
                     return {
                         "officeList": newOfficeRef
                     }
-                }else if(newResource.resourceType === "WorkMaterials"){
+                } else if (newResource.resourceType === "WorkMaterials") {
                     const newMaterialRef = [...prevState.wMaterialsList, newResource];
                     return {
                         "wMaterialsList": newMaterialRef
                     }
-                }else if(newResource.resourceType === "Utilities"){
+                } else if (newResource.resourceType === "Utilities") {
                     const newUtilityRef = [...prevState.utilitiesList, newResource];
                     return {
                         "utilitiesList": newUtilityRef
@@ -186,13 +188,14 @@ class App extends Component {
                 <Header/>
 
                 {/*CALENDAR*/}
-                <Route path={"/calendar/"} exact render={() =>
-                    <Calendar />}>
+
+                <Route path={"/calendar"} exact render={() =>
+                    <Calendar events={this.state.eventsList}/>}>
                 </Route>
 
                 {/*RESOURCES*/}
                 <Route path={"/resources/"} exact render={() =>
-                    <ResourcesMenu />}>
+                    <ResourcesMenu/>}>
                 </Route>
                 <Route path={"/resources/add"} exact render={() =>
                     <ResourcesAdd onNewResourcesAdded={this.addResource}/>}>
@@ -213,7 +216,7 @@ class App extends Component {
 
                 {/*LIBRARY*/}
                 <Route path={"/library/"} exact render={() =>
-                    <LibraryMenu />}>
+                    <LibraryMenu/>}>
                 </Route>
 
                 {/*BOOKS*/}
@@ -242,7 +245,7 @@ class App extends Component {
                 <Route path={"/library/add/documents"} exact render={() =>
                     <DocumentAdd onNewDocumentAdded={this.addDocument}/>}>
                 </Route>
-                <Redirect to="/calendar" />
+                <Redirect to="/calendar"/>
 
             </Router>
         );

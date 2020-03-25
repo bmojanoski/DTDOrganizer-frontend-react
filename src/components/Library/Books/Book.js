@@ -1,13 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './bookCard.css'
-import {BrowserRouter as Router, Redirect, Route,Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 const Book = (props) => {
     const { book } = props;
 
     return (
-        <Link className="text-reset" to={"/library/book/"+book.isbn}>
-
+            <Link className="text-reset"
+                  to={
+                {
+                    pathname: "/library/book/" + book.isbn
+                }
+            }>
             <div className="movie-card " >
                 <div className="movie-header movie-photo" style={ {backgroundImage: "url(" + book.imagePath + ")"}}>
                 </div>

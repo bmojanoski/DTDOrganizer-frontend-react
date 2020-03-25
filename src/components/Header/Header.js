@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link,NavLink  } from "react-router-dom";
+import { NavLink  } from "react-router-dom";
 
 
 class Header extends Component {
@@ -9,12 +9,12 @@ class Header extends Component {
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary  navbar-fixed sticky-top shadow">
           <div className="container">
             <a className="navbar-brand" href="/calendar">
-              <img src="../logo-without-name.png"  width="30" height="30" className="d-inline-block align-top mr-3"/>
+              <img alt={""} src="../logo-without-name.png"  width="30" height="30" className="d-inline-block align-top mr-3"/>
               Day to Day Organizer</a>
 
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
               aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
+              <span className="navbar-toggler-icon"/>
             </button>
 
 

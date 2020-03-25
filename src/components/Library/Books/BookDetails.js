@@ -1,5 +1,5 @@
-import React, {Component, useEffect, useState} from 'react';
-import {useParams, useHistory, Link} from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useParams,  Link} from 'react-router-dom';
 import DTDService from "../../../repository/axiosConsultationsRepository";
 
 const BookDetails = (props) => {
@@ -7,15 +7,18 @@ const BookDetails = (props) => {
 
     const {isbn} = useParams();
 
-    useEffect(() => {
-        DTDService.fetchBooksById(isbn).then((response) => {
+    function fetchData () {
+        DTDService.fetchBooksById({isbn}).then((response) => {
             const books = response.data;
             const currBook = {
                 ...books,
             };
             setBook(currBook);
         })
-    }, []);
+    }
+    useEffect(() => {
+        fetchData()
+    }, [fetchData]);
 
     return (
         <div className="container">
