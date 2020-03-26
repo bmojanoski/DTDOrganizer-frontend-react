@@ -87,7 +87,21 @@ const DTDService = {
                 'Content-Type' : 'application/json'
             }
         });
-    }
+    },
+    addEvent: (event) => {
+        return axios.post("/api/v1/calendar",event,{
+            headers:{
+                'Content-Type' : 'application/json'
+            }
+        });
+    },
+    deleteEvent: (id) => {
+        return axios.delete("/api/v1/calendar/"+id,{
+            headers:{
+                'Content-Type' : 'application/json'
+            }
+        });
+    },
 
 
 

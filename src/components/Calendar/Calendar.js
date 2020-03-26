@@ -1,133 +1,318 @@
 import React from 'react'
+
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import bootstrapPlugin from '@fullcalendar/bootstrap'
-import listPlugin from '@fullcalendar/list';
 import moment from 'moment'
-import Modal from "react-bootstrap/Modal";
-import "bootstrap/dist/css/bootstrap.min.css";
 
-import $ from 'jquery';
+import DatePicker from "react-datepicker"
+
+import Modal from "react-bootstrap/Modal"
+import "bootstrap/dist/css/bootstrap.min.css"
+
+import $ from 'jquery'
 import '../App/App.css'
-import {Tooltip} from "bootstrap";
-import DTDService from "../../repository/axiosConsultationsRepository";
-import DatePicker from "react-datepicker";
+import {Tooltip} from "bootstrap"
+import DTDService from "../../repository/axiosConsultationsRepository"
+
 
 import "react-datepicker/dist/react-datepicker.css";
-
+import ModalEdit from "../ModalEdit";
 
 export default class Calendar extends React.Component {
 
-    state = {
-        events: [],
-        show: false,
-        startDate: new Date(),
-        endDate: new Date()
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            events: [],
+            showEditEventModal: false,
+            showNewEventModal: false,
+            startDate: new Date(),
+            endDate: new Date(),
+            save: true,
+            edit: true,
+            show: false,
 
-    async componentDidMount() {
-        const response = await fetch(`http://localhost:8080/api/v1/calendar`);
-        const json = await response.json();
 
-        this.setState({
+            // event
+            id: "",
+            title: "",
+            start: "",
+            end: "",
+            description: "",
+            color: "",
+            allDay: "",
+            calendarEventType: ""
+        };
+        this.handleInputChange = this.handleInputChange.bind(this);
+    }
 
-            events: json.map(function (event) {
-                return {
-                    id: event.id,
-                    title: event.title,
-                    start: event.start_date,
-                    end: event.end_date,
-                    description: event.description,
-                    color: event.color,
-                    allDay: event.allDay,
-                    calendarEventType: event.calendarEventType
-                }
-            })
-        });
 
+    componentDidMount() {
+        (async () => {
+            const response = await fetch(`http://localhost:8080/api/v1/calendar`);
+            const json = await response.json();
+
+            this.setState({
+                events: json.map(function (event) {
+                    return {
+                        id: event.id,
+                        title: event.title,
+                        start: event.start_date,
+                        end: event.end_date,
+                        description: event.description,
+                        color: event.color,
+                        allDay: event.allDay,
+                        calendarEventType: event.calendarEventType
+                    }
+                })
+            });
+        })();
+    }
+
+     componentDidUpdate(prevProps, prevState) {
+        if (prevState.events.length !== this.state.events.length) {
+
+            (async () => {
+                const response = await fetch(`http://localhost:8080/api/v1/calendar`);
+                const json = await response.json();
+
+                this.setState({
+                    events: json.map(function (event) {
+                        return {
+                            id: event.id,
+                            title: event.title,
+                            start: event.start_date,
+                            end: event.end_date,
+                            description: event.description,
+                            color: event.color,
+                            allDay: event.allDay,
+                            calendarEventType: event.calendarEventType
+                        }
+                    })
+                });
+            })();
+        }
     }
 
     updateEvent = (event) => {
-        DTDService.updateEvent(event)
+        DTDService.updateEvent(event);
     };
-
-    handleClose = () => {
-        this.setState({
-            show: false
+    addNewEvent = (event) => {
+        DTDService.addEvent(event).then((response) => {
+            const newEvent = response.data;
+            this.setState((prevState) => {
+                const newEventRef = [...prevState.events, newEvent];
+                return {
+                    "events": newEventRef
+                }
+            });
         });
     };
-    handleShow = () => {
+    deleteEvent = (id) => {
+        DTDService.deleteEvent(id)
+    }
+    handleCloseEditModal = () => {
         this.setState({
-            show: true
+            showEditEventModal: false
+        });
+    };
+    handleShowEditModal = () => {
+        this.setState({
+            showEditEventModal: true
         });
     };
 
-    onFormSubmit = (arg) => {
-        arg.preventDefault();
-        this.handleClose();
+    handleCloseNewEventModal = () => {
+        this.setState({
 
-        let event = {
-            id: arg.target.id.value,
-            title: arg.target.title.value,
-            start_date: this.state.startDate,
-            end_date: this.state.endDate,
-            allDay: arg.target.allDay.value,
-            description: arg.target.description.value,
-            calendarEventType: arg.target.calendarEventType.value,
-            color: arg.target.color.value
-
-        };
-
-        debugger;
-        this.setState(prevState => ({
-            events: prevState.events.map(
-                specificEvent => specificEvent.id === parseInt(event.id) ? {
-                    ...specificEvent,
-                    start: event.start_date,
-                    end: event.end_date,
-                    allDay: event.allDay
-                } : specificEvent
-            )
-
-        }));
-
-        this.updateEvent(event);
-
+            showNewEventModal: false
+        });
     };
+    handleShowNewEventModal = () => {
+        this.setState({
+            showNewEventModal: true
+
+        });
+    };
+
 
     //This function is for adding new event
     handleDateClick = arg => {
-        if (window.confirm("Would you like to add an event from " + arg.startStr + "to " + arg.endStr + " ?")) {
-            this.handleShow();
-            this.setState({
-
-                // add new event data
-                events: this.state.events.concat({
-                    id: '3',
-                    title: 'event 3',
-                    start: arg.start,
-                    end: arg.end,
-                    allDay: arg.allDay,
-                    description: 'Hey Hey',
-                    color: 'yellow'
-                })
-            });
-        }
+        this.handleShowNewEventModal();
+        this.handleCloseEditModal();
+        this.setState({
+            edit: true,
+            save: false
+        });
+        var m = new Date();
+        m = Date.parse(arg.start);
+        this.handleChangeInDatePickerStart(m);
+        m = Date.parse(arg.end);
+        this.handleChangeInDatePickerEnd(m);
+        $('.allDay').val(arg.allDay);
     };
 
-    render() {
+    handleInputChange(e){
+        const target = e.target;
+        const value = target.value;
+        const name = target.name;
 
+        this.setState({
+            [name]: value
+        });
+    }
+    render() {
         return (
             <div className="container">
                 <div className="row">
                     <div className="mt-4 " style={{height: 85 + 'vh'}}>
 
-
+                        {/*/!*EDIT - MODAL*!/*/}
                         <Modal
-                            show={this.state.show}
-                            onHide={this.handleClose}
+                            show={this.state.showEditEventModal}
+                            onHide={this.handleCloseEditModal}
+                            size={"lg"}
+                        >
+                            <Modal.Header>
+                                <Modal.Title id="example-modal-sizes-title-sm modal-title">
+                                    Edit event
+                                </Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="col-12">
+                                            <form onSubmit={this.onFormSubmit.bind(this)} className={"row"}>
+                                                <div className="col-6">
+                                                    <div className="form-group">
+                                                        <label htmlFor="title">Title: </label>
+                                                        <input type="text"
+                                                               className="id"
+                                                               id="id"
+                                                               ref="id"
+                                                               hidden
+                                                               name="id"
+                                                               value={this.state.id}/>
+                                                        <input type="text"
+                                                               className="form-control form-control-sm title"
+                                                               id="title"
+                                                               name="title"
+                                                               value={this.state.title}
+                                                               onChange={this.handleInputChange}/>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label>Start date: </label>
+                                                        <DatePicker
+                                                            className={"form-control form-control-sm start_date"}
+                                                            selected={this.state.startDate}
+                                                            onChange={this.handleChangeInDatePickerStart}
+                                                            showTimeSelect
+                                                            timeIntervals={15}
+                                                            withPortal
+                                                            minDate={new Date()}
+                                                            showDisabledMonthNavigation
+                                                            dateFormat="MMMM d, yyyy h:mm aa"
+                                                            ref="startDate"
+                                                        />
+
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label>End date: </label>
+                                                        <DatePicker
+                                                            className={"form-control form-control-sm end_date"}
+                                                            selected={this.state.endDate}
+                                                            onChange={this.handleChangeInDatePickerEnd}
+                                                            showTimeSelect
+                                                            timeIntervals={15}
+                                                            dateFormat="MMMM d, yyyy h:mm aa"
+                                                            withPortal
+                                                            minDate={new Date()}
+                                                            showDisabledMonthNavigation
+                                                            ref="endDate"
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label htmlFor="description">Description</label>
+                                                        <input type="text"
+                                                               className="form-control form-control-sm description"
+                                                               id="description"
+                                                               name="description"
+                                                               value={this.state.description}
+                                                               onChange={this.handleInputChange}/>
+                                                    </div>
+                                                </div>
+                                                <div className="col-6">
+                                                    <div className="form-group">
+                                                        <label htmlFor="color">Color:</label>
+                                                        <input type="text"
+                                                               className="form-control form-control-sm color"
+                                                               id="color"
+                                                               name="color"
+                                                               value={this.state.color}
+                                                               onChange={this.handleInputChange}/>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label htmlFor="allDay">allDay:</label>
+                                                        <input type="text"
+                                                               className="form-control form-control-sm allDay"
+                                                               id="allDay"
+                                                               name="allDay"
+                                                               value={this.state.allDay}
+                                                               onChange={this.handleInputChange}/>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label htmlFor="calendarEventType">calendarEventType:</label>
+                                                        <input type="text"
+                                                               className="form-control form-control-sm calendarEventType"
+                                                               id="calendarEventType"
+                                                               name="calendarEventType"
+                                                               value={this.state.calendarEventType}
+                                                               onChange={this.handleInputChange}
+                                                        />
+                                                    </div>
+                                                    <div className="row form-group">
+                                                        <div className="col-md-12 text-right  p-0">
+
+                                                            <button type="submit"
+                                                                    className="btn btn-sm btn-primary mt-2"
+                                                                    title="Edit"
+                                                                    hidden={this.state.edit}
+                                                            ><i className="fa fa-fw fa-save"/> Edit
+                                                            </button>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                    <div className="row text-right">
+                                        <div className="col-12">
+                                            <button onClick={this.handleDeleteEvent.bind(this)}
+                                                    className="btn btn-sm btn-danger mt-2"
+                                                    title="Delete">
+                                                <i className="fa fa-fw fa-times"/> Delete
+                                            </button>
+
+                                            <button onClick={this.handleCloseEditModal}
+                                                    className="btn btn-sm btn-danger ml-2 mt-2"
+                                                    title="Cancel">
+                                                <i className="fa fa-fw fa-times"/> Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Modal.Body>
+                        </Modal>
+
+                        {/*ADD NEW EVENT - MODAL*/}
+                        <Modal
+                            show={this.state.showNewEventModal}
+                            onHide={this.handleCloseNewEventModal}
                             size={"lg"}
                         >
                             <Modal.Header>
@@ -139,7 +324,7 @@ export default class Calendar extends React.Component {
                                 <div className="container">
                                     <div className="row">
                                         <div className="col-12">
-                                            <form onSubmit={this.onFormSubmit} className={"row"}>
+                                            <form onSubmit={this.onFormSubmitAddNewEvent} className={"row"}>
                                                 <div className="col-6">
                                                     <div className="form-group">
                                                         <label htmlFor="title">Title: </label>
@@ -149,7 +334,7 @@ export default class Calendar extends React.Component {
                                                                id="title"/>
                                                     </div>
                                                     <div className="form-group">
-                                                        <label >Start date: </label>
+                                                        <label>Start date: </label>
                                                         <DatePicker
                                                             className={"form-control form-control-sm start_date"}
                                                             selected={this.state.startDate}
@@ -160,12 +345,11 @@ export default class Calendar extends React.Component {
                                                             minDate={new Date()}
                                                             showDisabledMonthNavigation
                                                             dateFormat="MMMM d, yyyy h:mm aa"
-
                                                         />
 
                                                     </div>
                                                     <div className="form-group">
-                                                        <label >End date: </label>
+                                                        <label>End date: </label>
                                                         <DatePicker
                                                             className={"form-control form-control-sm end_date"}
                                                             selected={this.state.endDate}
@@ -177,7 +361,6 @@ export default class Calendar extends React.Component {
                                                             minDate={new Date()}
                                                             showDisabledMonthNavigation
                                                         />
-
                                                     </div>
                                                     <div className="form-group">
                                                         <label htmlFor="description">Description</label>
@@ -210,16 +393,19 @@ export default class Calendar extends React.Component {
                                                             <button type="submit"
                                                                     className="btn btn-sm btn-primary mt-2"
                                                                     title="Save"
-                                                            >
-                                                                <i className="fa fa-fw fa-save"/> Save
+                                                                    hidden={this.state.save}
+                                                            ><i className="fa fa-fw fa-save"/> Save
                                                             </button>
-
-
                                                         </div>
                                                     </div>
                                                 </div>
                                             </form>
-                                            <button onClick={this.handleClose}
+
+                                        </div>
+                                    </div>
+                                    <div className="row text-right">
+                                        <div className="col-12">
+                                            <button onClick={this.handleCloseNewEventModal}
                                                     className="btn btn-sm btn-danger ml-2 mt-2"
                                                     title="Cancel">
                                                 <i className="fa fa-fw fa-times"/> Cancel
@@ -240,7 +426,6 @@ export default class Calendar extends React.Component {
                             }}
                             displayEventEnd={true}
                             timeZone={'local'}
-                            defaultDate={new Date()}
                             firstDay={1}
                             header={{
                                 left: 'dayGridMonth,timeGridWeek,timeGridDay',
@@ -255,7 +440,7 @@ export default class Calendar extends React.Component {
                                 },
 
                             ]}
-                            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, bootstrapPlugin, listPlugin]}
+                            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, bootstrapPlugin]}
                             themeSystem={"bootstrap"}
 
                             events={this.state.events}
@@ -266,7 +451,7 @@ export default class Calendar extends React.Component {
                             eventResize={this.eventResize}
                             eventClick={this.eventClicked}
 
-                            lazyFetching={false}
+                            selectMirror={true}
                             height={"parent"}
                             weekNumbers={true}
                             weekNumbersWithinDays={true}
@@ -295,34 +480,88 @@ export default class Calendar extends React.Component {
 
     //When i click on specific event bind the modal with this data
     eventClicked = arg => {
-
-
-        let event = {
-            id: arg.event.id,
-            title: arg.event.title,
-            start_date: arg.event.start,
-            end_date: arg.event.end,
-            allDay: arg.event.allDay,
-            description: arg.event.extendedProps.description,
-            calendarEventType: arg.event.extendedProps.calendarEventType,
-            color: arg.event.backgroundColor
-
-        };
-        debugger;
-        this.handleShow();
-        $('.title').val(event.title);
-        $('.id').val(event.id);
-        this.handleChangeInDatePickerStart(event.start_date);
-        this.handleChangeInDatePickerEnd(event.end_date);
-        $('.description').val(event.description);
-        $('.allDay').val(event.allDay);
-        $('.color').val(event.color);
-        $('.calendarEventType').val(event.calendarEventType);
-
+        this.state.events.map(
+            specificEvent => {
+                if (specificEvent.id === parseInt(arg.event.id)) {
+                    this.handleShowEditModal();
+                    this.handleCloseNewEventModal();
+                    this.setState({
+                        edit: false,
+                        id: specificEvent.id,
+                        title: specificEvent.title,
+                        description: specificEvent.description,
+                        allDay: specificEvent.allDay,
+                        color: specificEvent.color,
+                        calendarEventType: specificEvent.calendarEventType
+                    });
+                    var m = new Date();
+                    m = Date.parse(specificEvent.start);
+                    this.handleChangeInDatePickerStart(m);
+                    m = Date.parse(specificEvent.end);
+                    this.handleChangeInDatePickerEnd(m);
+                }
+            }
+        );
     };
 
 
+    handleDeleteEvent() {
+        this.handleCloseEditModal();
 
+        this.setState(prevState => ({
+            events: this.state.events.filter(event => event.id !== this.state.id)
+        }));
+        this.deleteEvent(this.state.id);
+
+    };
+    //When edit form is submited
+    onFormSubmit = (arg) => {
+
+        arg.preventDefault();
+        this.handleCloseEditModal();
+        let event = {
+            id: arg.target.id.value,
+            title: arg.target.title.value,
+            start_date: moment(this.state.startDate).format('YYYY-MM-DD HH:mm'),
+            end_date: moment(this.state.endDate).format('YYYY-MM-DD HH:mm'),
+            allDay: arg.target.allDay.value,
+            description: arg.target.description.value,
+            calendarEventType: arg.target.calendarEventType.value,
+            color: arg.target.color.value
+
+        };
+
+        this.setState(prevState => ({
+            events: prevState.events.map(
+                specificEvent => specificEvent.id === parseInt(event.id) ? {
+                    ...specificEvent,
+                    start: moment(event.start_date).format('YYYY-MM-DD HH:mm'),
+                    end: moment(event.end_date).format('YYYY-MM-DD HH:mm'),
+                    allDay: event.allDay
+                } : specificEvent
+            )
+
+        }));
+        this.updateEvent(event);
+    };
+
+    onFormSubmitAddNewEvent = (arg) => {
+        arg.preventDefault();
+        this.handleCloseNewEventModal();
+        let event = {
+            id: "",
+            title: arg.target.title.value,
+            start_date: moment(this.state.startDate).format('YYYY-MM-DD HH:mm'),
+            end_date: moment(this.state.endDate).format('YYYY-MM-DD HH:mm'),
+            allDay: arg.target.allDay.value,
+            description: arg.target.description.value,
+            calendarEventType: arg.target.calendarEventType.value,
+            color: arg.target.color.value
+
+        };
+
+        this.addNewEvent(event);
+    };
 
     //This method is used when user resize the specific event, first state is changed, after changes are saved in database
     eventResize = arg => {
@@ -332,14 +571,14 @@ export default class Calendar extends React.Component {
             end_date: arg.event.end,
             allDay: arg.event.allDay
         };
-        debugger;
+
         this.setState(prevState => (
             {
                 events: prevState.events.map(
                     specificEvent => specificEvent.id === event.id ? {
                         ...specificEvent,
-                        start: event.start,
-                        end: event.end,
+                        start: event.start_date,
+                        end: event.end_date,
                         allDay: event.allDay
                     } : specificEvent
                 )
