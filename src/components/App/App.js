@@ -21,6 +21,7 @@ import MaterialList from "../Resources/WorkMaterials/MaterialList";
 import UtilityList from "../Resources/Utilities/UtilityList";
 import ResourcesAdd from "../Resources/ResourcesAdd";
 import Calendar from "../Calendar/Calendar";
+import Home from "../Home/Home";
 
 
 class App extends Component {
@@ -186,10 +187,7 @@ class App extends Component {
 
         const routing = (
             <Router>
-                <Header/>
-
                 {/*CALENDAR*/}
-
                 <Route path={"/calendar"} exact render={() =>
                     <Calendar events={this.state.eventsList}/>}>
                 </Route>
@@ -246,7 +244,12 @@ class App extends Component {
                 <Route path={"/library/add/documents"} exact render={() =>
                     <DocumentAdd onNewDocumentAdded={this.addDocument}/>}>
                 </Route>
-                <Redirect to="/calendar"/>
+                {/*HOME PAGE*/}
+                <Route path={"/"} exact render={() =>
+                    <Home/>}>
+                </Route>
+
+                <Redirect to="/"/>
 
             </Router>
         );

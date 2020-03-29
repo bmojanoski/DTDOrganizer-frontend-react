@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { NavLink  } from "react-router-dom";
 
 
-class Header extends Component {
+  class Header extends Component {
   render() {
     return (
       <header>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-primary  navbar-fixed sticky-top shadow">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-header  navbar-fixed sticky-top shadow">
           <div className="container">
-            <a className="navbar-brand" href="/calendar">
-              <img alt={""} src="../logo-without-name.png"  width="30" height="30" className="d-inline-block align-top mr-3"/>
-              Day to Day Organizer</a>
+            <a className="navbar-brand" href="/">
+              <img alt={""} src="../logo-brand.svg"  width="150" height="40" className="d-inline-block align-top mr-3"/>
+            </a>
 
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
               aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,20 +18,20 @@ class Header extends Component {
             </button>
 
 
-            <div className="collapse navbar-collapse " id="navbarCollapse">
+            <div className="collapse navbar-collapse justify-content-end" id="navbarCollapse">
 
-              <ul className="navbar-nav mr-auto mt-2 mt-lg-0" >
+              <ul className="navbar-nav mt-2 mt-lg-0" >
                 <li className="nav-item">
-                  <NavLink className="nav-link" activeClassName="active" to={"/calendar"} >Calendar</NavLink>
+                  <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/calendar"} >Calendar</NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/resources"}>Resources</NavLink>
                 </li>
                 <li className="nav-item ">
-                  <NavLink className="nav-link" activeClassName="active" to={"/resources"}>Resources</NavLink>
+                  <NavLink className= "nav-link text-menu-size" activeClassName="active" to={"/library/"}>Library</NavLink>
                 </li>
                 <li className="nav-item ">
-                  <NavLink className={"nav-link"} activeClassName="active" to={"/library/"}>Library</NavLink>
-                </li>
-                <li className="nav-item ">
-                  <NavLink className={"nav-link"} activeClassName="active" to={"/food"}>Food</NavLink>
+                  <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/food"}>Food</NavLink>
                 </li>
 
               </ul>

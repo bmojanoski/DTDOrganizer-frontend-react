@@ -19,7 +19,7 @@ import DTDService from "../../repository/axiosConsultationsRepository"
 
 
 import "react-datepicker/dist/react-datepicker.css";
-import ModalEdit from "../ModalEdit";
+import Header from "../Header/Header";
 
 export default class Calendar extends React.Component {
 
@@ -166,6 +166,7 @@ export default class Calendar extends React.Component {
     }
     render() {
         return (
+            <><Header/>
             <div className="container">
                 <div className="row">
                     <div className="mt-4 " style={{height: 85 + 'vh'}}>
@@ -464,6 +465,7 @@ export default class Calendar extends React.Component {
                     </div>
                 </div>
             </div>
+            </>
         );
     }
 

@@ -6,10 +6,12 @@ import Checkbox from "./Checkbox";
 
 import {NavLink} from "react-router-dom";
 
-import { toast } from 'react-toastify'
+import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Header from "../../Header/Header";
 
 toast.configure();
+
 class OfficeList extends React.Component {
 
     constructor(props) {
@@ -35,7 +37,7 @@ class OfficeList extends React.Component {
     onFormSubmit = (e) => {
         e.preventDefault();
 
-        if( this.state.checkedIds.length > 0 ){
+        if (this.state.checkedIds.length > 0) {
             this.notifySuccess();
             const aii = Math.floor((Math.random() * 9999999) + 1);
             let name = aii.toString();
@@ -47,12 +49,12 @@ class OfficeList extends React.Component {
             this.props.onNewRequest(newRequest);
             this.setState(prevState => ({checkedItems: prevState.checkedItems = new Map()}));
             this.setState(prevState => ({checkedIds: prevState.checkedIds = []}));
-        }else{
+        } else {
             this.notifyWarning();
         }
     };
     notifySuccess = () => {
-        toast.success('✅ Successfully requested items!',{
+        toast.success('✅ Successfully requested items!', {
             position: "bottom-center",
             autoClose: 3000,
             closeOnClick: true,
@@ -74,29 +76,27 @@ class OfficeList extends React.Component {
     render() {
         return (
             <div>
-                <div className="container ">
-                    <div className="row justify-content-center">
-                        <ResourcesMenu office={"active"}/>
-                    </div>
-                </div>
+                <ResourcesMenu office={"active"}/>
+
                 <div className="container">
                     <div className="row justify-content-center  align-items-center">
                         <div className="col-3 p-0 text-right">
                             <form onSubmit={this.onFormSubmit}>
                                 <button type="submit"
                                         className="btn btn-sm btn-outline-primary request-alert"
-                                        >Request selected items
+                                >Request selected items
                                 </button>
                             </form>
 
 
                         </div>
                         <div className="col-1 p-0">
-                            <span className="text-primary font-weight-light">OR</span>
+                            <span className="text-color-primary font-weight-light">OR</span>
                         </div>
                         <div className="col-3 p-0 text-left">
                             <NavLink className={"text-reset"} to={"/resources/add"}>
-                                <input type="button" className="btn btn-sm btn-outline-primary" value="Add new resources" name="options" id="option3"/>
+                                <input type="button" className="btn btn-sm btn-outline-primary"
+                                       value="Add new resources" name="options" id="option3"/>
                             </NavLink>
                         </div>
                     </div>

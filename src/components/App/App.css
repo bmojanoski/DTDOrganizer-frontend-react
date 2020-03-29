@@ -63,6 +63,54 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+.text-prim {
+  color: #004266!important;
+  font-size: 20px;
+}
+.text-prim:hover {
+  color: #4dc7df!important;
+  border-bottom: 1px solid black;
+}
+
+.bg-header {
+  background-color: #004266!important;
+}
+.text-color-primary{
+  color: #004266!important;
+}
+.text-menu-size {
+  font-size: 18px!important;
+  margin-right: 10px!important;
+}
+
+.btn-primary {
+  background-color: #004266!important;
+  border-color: #004266!important;
+}
+.btn-primary:hover {
+
+  background-color: #4dc7df!important;
+  border-color: #4dc7df!important;
+}
+.btn-outline-primary {
+  color:#004266!important;
+  border-color: #004266!important;
+}
+.btn-outline-primary:hover {
+  color:#004266!important;
+  background-color: rgba(77, 199, 223, 0.9);
+  border-color: #4dc7df!important;
+}
+
+label.btn.btn-primary.active {
+
+  background-color: #4dc7df!important;
+  border-color: #4dc7df!important;
+}
+.bg-transparent {
+  background: rgba(255,255,255,0.9);
+}
+
 
 @media only screen and (max-width: 770px) {
   #root > div > div > div > div > div > div.fc-toolbar.fc-header-toolbar{

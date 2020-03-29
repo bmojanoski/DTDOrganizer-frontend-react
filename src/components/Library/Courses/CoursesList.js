@@ -7,11 +7,9 @@ const CourseList = (props) => {
 
     return (
         <div>
-            <div className="container ">
-                <div className="row justify-content-center" >
-                    <LibraryMenu course={"active"}/>
-                </div>
-            </div>
+
+            <LibraryMenu course={"active"}/>
+
             <div className="container">
                 <div className="row justify-content-center">
 

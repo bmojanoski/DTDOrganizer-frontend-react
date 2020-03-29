@@ -71,11 +71,8 @@ class UtilityList extends React.Component {
     render() {
         return (
             <div>
-                <div className="container ">
-                    <div className="row justify-content-center">
-                        <ResourcesMenu utilities={"active"}/>
-                    </div>
-                </div>
+                <ResourcesMenu utilities={"active"}/>
+
                 <div className="container">
                     <div className="row justify-content-center  align-items-center">
                         <div className="col-3 p-0 text-right">
@@ -87,7 +84,7 @@ class UtilityList extends React.Component {
                             </form>
                         </div>
                         <div className="col-1 p-0">
-                            <span className="font-weight-light text-primary">OR</span>
+                            <span className="font-weight-light text-color-primary">OR</span>
                         </div>
                         <div className="col-3 p-0 text-left">
                             <NavLink className={"text-reset"} to={"/resources/add"}>

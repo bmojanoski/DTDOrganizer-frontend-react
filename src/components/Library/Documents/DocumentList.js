@@ -7,11 +7,9 @@ const DocumentList = (props) => {
 
     return (
         <div>
-            <div className="container ">
-                <div className="row justify-content-center" >
-                    <LibraryMenu document={"active"}/>
-                </div>
-            </div>
+
+            <LibraryMenu document={"active"}/>
+
             <div className="container">
                 <div className="row justify-content-center">
 
