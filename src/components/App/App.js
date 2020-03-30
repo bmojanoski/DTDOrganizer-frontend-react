@@ -22,6 +22,7 @@ import UtilityList from "../Resources/Utilities/UtilityList";
 import ResourcesAdd from "../Resources/ResourcesAdd";
 import Calendar from "../Calendar/Calendar";
 import Home from "../Home/Home";
+import Food from "../Food/Food";
 
 
 class App extends Component {
@@ -244,6 +245,12 @@ class App extends Component {
                 <Route path={"/library/add/documents"} exact render={() =>
                     <DocumentAdd onNewDocumentAdded={this.addDocument}/>}>
                 </Route>
+
+                {/*FOOD*/}
+                <Route path={"/food"} exact render={() =>
+                    <Food/>}>
+                </Route>
+
                 {/*HOME PAGE*/}
                 <Route path={"/"} exact render={() =>
                     <Home/>}>

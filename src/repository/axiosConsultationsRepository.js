@@ -4,6 +4,10 @@ import axios from '../custom-axios/axios'
 
 const DTDService = {
 
+    // FOOD
+    fetchRestaurants: ()=> {
+        return axios.get("/api/v1/restaurants");
+    },
     // BOOKS
     fetchBooks: ()=> {
         return axios.get("/api/v1/books");
