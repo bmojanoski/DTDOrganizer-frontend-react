@@ -75,8 +75,14 @@
 .bg-header {
   background-color: #004266!important;
 }
+.bg-header-sec {
+  background-color: #4dc7df!important;
+}
 .text-color-primary{
   color: #004266!important;
+}
+.text-color-secondary{
+  color: #4dc7df!important;
 }
 .text-menu-size {
   font-size: 18px!important;

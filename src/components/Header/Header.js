@@ -25,10 +25,10 @@ import { NavLink  } from "react-router-dom";
                   <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/calendar"} >Calendar</NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/resources"}>Resources</NavLink>
+                  <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/resources/office"}>Resources</NavLink>
                 </li>
                 <li className="nav-item ">
-                  <NavLink className= "nav-link text-menu-size" activeClassName="active" to={"/library/"}>Library</NavLink>
+                  <NavLink className= "nav-link text-menu-size" activeClassName="active" to={"/library/book"}>Library</NavLink>
                 </li>
                 <li className="nav-item ">
                   <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/food"}>Food</NavLink>

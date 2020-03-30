@@ -36,7 +36,8 @@ class App extends Component {
             officeList: [],
             wMaterialsList: [],
             utilitiesList: [],
-            eventsList: []
+            eventsList: [],
+            restaurantList: []
         }
     }
 
@@ -47,9 +48,16 @@ class App extends Component {
         this.loadOffice();
         this.loadWorkMaterials();
         this.loadUtilities();
-
+        this.loadRestaurants();
     }
-
+    //RESTAURANTS
+    loadRestaurants = () => {
+        DTDService.fetchRestaurants().then((response) => {
+            this.setState({
+                restaurantList: response.data
+            });
+        });
+    };
     //BOOKS
     loadBooks = () => {
         DTDService.fetchBooks().then((response) => {
@@ -185,6 +193,9 @@ class App extends Component {
         const utilityState = {
             utilitiesList: this.state.utilitiesList
         };
+        const restaurantState = {
+            restaurantList: this.state.restaurantList
+        };
 
         const routing = (
             <Router>
@@ -248,7 +259,7 @@ class App extends Component {
 
                 {/*FOOD*/}
                 <Route path={"/food"} exact render={() =>
-                    <Food/>}>
+                    <Food {...restaurantState}/>}>
                 </Route>
 
                 {/*HOME PAGE*/}

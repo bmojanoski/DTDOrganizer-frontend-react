@@ -4,58 +4,54 @@ import Restaurant from "./Restaurant";
 import Order from "./Order";
 import TodayOrders from "./TodayOrders";
 import DTDService from "../../repository/axiosConsultationsRepository";
-import Book from "../Library/Books/Book";
 
 class Food extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            restaurantList: []
-
+        this.state={
+            orderList: [],
         }
     }
-
     componentDidMount() {
-        this.loadRestaurants();
+        this.loadOrders();
     }
 
-    //BOOKS
-    loadRestaurants = () => {
-        DTDService.fetchRestaurants().then((response) => {
+    loadOrders = () => {
+        DTDService.fetchOrders().then((response) => {
             this.setState({
-                restaurantList: response.data
+                orderList: response.data
+
             });
         });
     };
 
-
     render() {
-
         return (
             <div>
                 <Header/>
                 <div className="container">
                     <div className="row">
 
-                            {this.state.restaurantList.map((restaurant) =>
-                                <div className="col-lg-4 col-md-6 col-sm-6 col-10 my-3 " key={restaurant.id}>
-                                    <Restaurant
-                                        key={restaurant.id}
-                                        restaurant={restaurant}
-                                    />
-                                </div>
-                            )}
+                        {this.props.restaurantList.map((restaurant) =>
+                            <div className="col-lg-4 col-md-6 col-sm-6 col-10 my-3 " key={restaurant.id}>
+                                <Restaurant
+                                    key={restaurant.id}
+                                    restaurant={restaurant}
+                                />
+                            </div>
+                        )}
 
                     </div>
+                </div>
+                <div className="container-fluid">
                     <div className="row">
                         <div className="col-6">
-                            <Order/>
+                            <Order restaurantList={this.props.restaurantList}/>
                         </div>
                         <div className="col-6">
                             <TodayOrders/>
                         </div>
                     </div>
-
                 </div>
             </div>
         )

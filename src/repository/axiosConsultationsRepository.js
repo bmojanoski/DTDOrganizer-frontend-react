@@ -8,6 +8,10 @@ const DTDService = {
     fetchRestaurants: ()=> {
         return axios.get("/api/v1/restaurants");
     },
+    // ORDERS
+    fetchOrders: ()=> {
+        return axios.get("/api/v1/orders");
+    },
     // BOOKS
     fetchBooks: ()=> {
         return axios.get("/api/v1/books");
