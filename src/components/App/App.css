@@ -45,7 +45,6 @@
 /* width */
 ::-webkit-scrollbar {
   width: 5px;
-
 }
 
 /* Track */
@@ -56,7 +55,6 @@
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
-
 }
 
 /* Handle on hover */
@@ -69,7 +67,7 @@
 }
 .text-prim:hover {
   color: #4dc7df!important;
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid black;
 }
 
 .bg-header {
@@ -94,7 +92,6 @@
   border-color: #004266!important;
 }
 .btn-primary:hover {
-
   background-color: #4dc7df!important;
   border-color: #4dc7df!important;
 }
@@ -109,14 +106,12 @@
 }
 
 label.btn.btn-primary.active {
-
   background-color: #4dc7df!important;
   border-color: #4dc7df!important;
 }
 .bg-transparent {
   background: rgba(255,255,255,0.9);
 }
-
 
 @media only screen and (max-width: 770px) {
   #root > div > div > div > div > div > div.fc-toolbar.fc-header-toolbar{

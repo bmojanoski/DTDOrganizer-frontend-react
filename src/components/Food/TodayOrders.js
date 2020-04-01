@@ -6,10 +6,6 @@ class TodayOrders extends Component {
         super(props);
     }
 
-
-
-
-
     render() {
         return (
             <div className="card mb-4" >
@@ -29,18 +25,19 @@ class TodayOrders extends Component {
                         </div>
 
                     </li>
+                    {this.props.orderList.map((order) =>
 
                     <li className="list-group-item">
                         <div className="container">
                             <div className="row">
-                                <div className="col-3 p-0">Pizza Morino Skopje</div>
-                                <div className="col-3 p-0">Hamburger</div>
-                                <div className="col-4 p-0">Without katchup, so majonez, bez paprika i ljuto</div>
-                                <div className="col-2 p-0">240 MKD</div>
+                                <div className="col-3 p-0">{order.restaurant.name}</div>
+                                <div className="col-3 p-0">{order.foods[0].name}</div>
+                                <div className="col-4 p-0">{order.description}</div>
+                                <div className="col-2 p-0">{order.price} MKD</div>
                             </div>
                         </div>
-
                     </li>
+                    )}
                 </ul>
             </div>
         )

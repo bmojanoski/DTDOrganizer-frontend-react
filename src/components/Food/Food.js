@@ -8,24 +8,10 @@ import DTDService from "../../repository/axiosConsultationsRepository";
 class Food extends Component {
     constructor(props) {
         super(props);
-        this.state={
-            orderList: [],
-        }
     }
-    componentDidMount() {
-        this.loadOrders();
-    }
-
-    loadOrders = () => {
-        DTDService.fetchOrders().then((response) => {
-            this.setState({
-                orderList: response.data
-
-            });
-        });
-    };
 
     render() {
+
         return (
             <div>
                 <Header/>
@@ -49,7 +35,7 @@ class Food extends Component {
                             <Order restaurantList={this.props.restaurantList}/>
                         </div>
                         <div className="col-6">
-                            <TodayOrders/>
+                            <TodayOrders orderList={this.props.orderList}/>
                         </div>
                     </div>
                 </div>

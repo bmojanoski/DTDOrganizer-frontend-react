@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 const Restaurant = (props) => {
     const {restaurant} = props;
-    debugger;
+
     return (
         <div>
 
