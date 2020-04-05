@@ -4,15 +4,10 @@ import {Link} from 'react-router-dom'
 
 const Book = (props) => {
     const {book} = props;
-
     return (
-        <Link className="text-reset"
-              to={
-                  {
-                      pathname: "/library/book/" + book.isbn
-                  }
-              }>
-            <div className="movie-card ">
+        <Link to={`/library/book/${book.isbn}`}>
+
+        <div className="movie-card ">
                 <div className="movie-header movie-photo" style={{backgroundImage: "url(" + book.imagePath + ")"}}>
                 </div>
 

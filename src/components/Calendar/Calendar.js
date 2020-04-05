@@ -483,7 +483,7 @@ export default class Calendar extends React.Component {
     //When i click on specific event bind the modal with this data
     eventClicked = arg => {
         this.state.events.map(
-            specificEvent => {
+            (specificEvent) => {
                 if (specificEvent.id === parseInt(arg.event.id)) {
                     this.handleShowEditModal();
                     this.handleCloseNewEventModal();

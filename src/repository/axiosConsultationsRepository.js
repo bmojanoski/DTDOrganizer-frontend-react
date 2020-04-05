@@ -26,6 +26,14 @@ const DTDService = {
             }
         });
     },
+    postOrder: (order) => {
+        debugger;
+        return axios.post("/api/v1/orders", order ,{
+            headers:{
+                'Content-Type' : 'application/json'
+            }
+        });
+    },
 
     // COURSES
     fetchCourses: ()=> {

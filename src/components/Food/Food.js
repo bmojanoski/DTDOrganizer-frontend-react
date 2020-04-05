@@ -3,13 +3,8 @@ import Header from "../Header/Header";
 import Restaurant from "./Restaurant";
 import Order from "./Order";
 import TodayOrders from "./TodayOrders";
-import DTDService from "../../repository/axiosConsultationsRepository";
 
 class Food extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
 
         return (

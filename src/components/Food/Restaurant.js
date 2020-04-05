@@ -1,29 +1,18 @@
-import React, {Component} from 'react';
+import React from 'react';
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
+
 
 const Restaurant = (props) => {
     const {restaurant} = props;
-
     return (
-        <div>
-
-            <div className="movie-card ">
-                <div className="movie-header movie-photo img-enlargable"
-                     data-enlargable
-                     style={{backgroundImage: "url(" + restaurant.image + ")", cursor: "zoom-in"}}>
-                </div>
-                <div className="movie-content">
-                    <div className="movie-content-header">
-                        <h1 className="movie-title text-left">{restaurant.name}</h1>
-                    </div>
-                    <div className="movie-info">
-                        <div className="info-section text-right">
-                            <label>Price Range</label>
-                            <span>{restaurant.priceRange}</span>
-                        </div>
-                    </div>
-                </div>
+        <Zoom>
+            <div>
+                <img src={props.restaurant.image} style={{width: 300 + "px", height: 280 + "px"}} alt={""}/>
+                <div className={"font-weight-bold"}>{restaurant.name}</div>
+                <span className={"small"}>Price Range: {restaurant.priceRange}</span>
             </div>
-        </div>
+        </Zoom>
     )
 };
 

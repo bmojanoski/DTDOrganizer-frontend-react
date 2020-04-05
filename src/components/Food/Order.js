@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import axios from "../../custom-axios/axios";
+import DTDService from "../../repository/axiosConsultationsRepository";
 
 class Order extends Component {
     constructor(props) {
@@ -23,7 +25,7 @@ class Order extends Component {
     }
 
     handleChangeFood(e, index) {
-        debugger;
+
         this.state.inputs.food[index] = e.target.value
 
         //set the changed state...
@@ -36,7 +38,7 @@ class Order extends Component {
     }
 
     handleChangePrice(e, index) {
-        this.state.inputs.price[index] = e.target.value
+        this.state.inputs.price[index] = e.target.value;
 
         //set the changed state...
         this.setState({
@@ -61,13 +63,30 @@ class Order extends Component {
     }
 
     handleSubmit(e) {
-        console.log(this.state, "####");
+        e.preventDefault();
         var priceSum = 0;
-        this.state.inputs.price.forEach(function (element) { priceSum += element });
+        this.state.inputs.price.forEach(function (element) {
+            priceSum += parseInt(element)
+        });
+        var food=[];
 
-        var order= {
-
+        for(var i=0; i< this.state.inputs.food.length; i++){
+            food.push({
+                name :  this.state.inputs.food[i],
+                price : this.state.inputs.price[i]
+            });
         }
+        var d = new Date();
+        var order = {
+            "price": priceSum,
+            "description": this.state.description,
+            "date": d.toISOString().split("T",1)[0],
+            "foods": food,
+            "restaurant_id": 123
+        };
+        //
+        DTDService.postOrder(order);
+
     }
 
     render() {

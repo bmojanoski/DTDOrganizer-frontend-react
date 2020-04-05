@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
-import DTDService from "../../repository/axiosConsultationsRepository";
+
 
 class TodayOrders extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div className="card mb-4" >

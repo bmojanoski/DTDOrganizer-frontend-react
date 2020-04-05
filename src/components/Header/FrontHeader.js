@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {NavLink} from "react-router-dom";
 
 
@@ -28,11 +28,11 @@ const FrontHeader = () => {
                             </li>
                             <li className="nav-item ">
                                 <NavLink className="nav-link mr-3  text-prim font-weight-bold " activeClassName="active"
-                                         to={"/resources"}>Resources</NavLink>
+                                         to={"/resources/office"}>Resources</NavLink>
                             </li>
                             <li className="nav-item ">
                                 <NavLink className="nav-link mr-3 text-prim font-weight-bold " activeClassName="active"
-                                         to={"/library/"}>Library</NavLink>
+                                         to={"/library/book"}>Library</NavLink>
                             </li>
                             <li className="nav-item ">
                                 <NavLink className="nav-link text-prim font-weight-bold" activeClassName="active"

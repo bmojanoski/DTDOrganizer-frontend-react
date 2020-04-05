@@ -5,9 +5,7 @@ import Image from '../../img-01.png';
 import FrontHeader from "../Header/FrontHeader";
 
 class Home extends Component {
-    constructor(props) {
-        super(props);
-    }
+
     styles = {
         background:`url(${Image}) no-repeat`,
         float: "left",

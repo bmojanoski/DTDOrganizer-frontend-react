@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom'
 
 // Components
-import Header from "../Header/Header"
-
 import DTDService from '../../repository/axiosConsultationsRepository';
 import BookList from '../Library/Books/BookList';
 import BookDetails from "../Library/Books/BookDetails";
@@ -11,9 +9,7 @@ import BookAdd from "../Library/Books/BookAdd";
 import CourseList from "../Library/Courses/CoursesList";
 import DocumentList from "../Library/Documents/DocumentList";
 import CourseAdd from "../Library/Courses/CourseAdd";
-
 import DocumentAdd from "../Library/Documents/DocumentAdd";
-
 import LibraryMenu from "../Library/Menu/Menu";
 import ResourcesMenu from "../Resources/Menu/ResourcesMenu";
 import OfficeList from "../Resources/Office/OfficeList";
@@ -23,7 +19,6 @@ import ResourcesAdd from "../Resources/ResourcesAdd";
 import Calendar from "../Calendar/Calendar";
 import Home from "../Home/Home";
 import Food from "../Food/Food";
-
 
 class App extends Component {
 
@@ -38,7 +33,7 @@ class App extends Component {
             utilitiesList: [],
             eventsList: [],
             restaurantList: [],
-            orderList:[]
+            orderList: []
         }
     }
 
@@ -52,6 +47,7 @@ class App extends Component {
         this.loadRestaurants();
         this.loadOrders();
     }
+
     //RESTAURANTS
     loadRestaurants = () => {
         DTDService.fetchRestaurants().then((response) => {
@@ -247,9 +243,8 @@ class App extends Component {
                 <Route path={"/library/book"} exact render={() =>
                     <BookList {...state} />}>
                 </Route>
-                <Route path={"/library/book/:isbn"} exact render={() =>
-                    <BookDetails/>}>
-                </Route>
+                <Route path={"/library/book/:isbn"} component={BookDetails}/>
+
                 <Route path={"/library/add/book"} exact render={() =>
                     <BookAdd onNewBookAdded={this.addBook}/>}>
                 </Route>
