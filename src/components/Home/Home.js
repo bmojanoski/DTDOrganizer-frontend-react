@@ -18,7 +18,9 @@ class Home extends Component {
     };
 
     render() {
+
         return (
+
             <div>
                 <FrontHeader/>
                 <div className="intro" style={this.styles}>

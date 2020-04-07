@@ -100,6 +100,7 @@ export default class Calendar extends React.Component {
     updateEvent = (event) => {
         DTDService.updateEvent(event);
     };
+
     addNewEvent = (event) => {
         DTDService.addEvent(event).then((response) => {
             const newEvent = response.data;
@@ -113,7 +114,7 @@ export default class Calendar extends React.Component {
     };
     deleteEvent = (id) => {
         DTDService.deleteEvent(id)
-    }
+    };
     handleCloseEditModal = () => {
         this.setState({
             showEditEventModal: false

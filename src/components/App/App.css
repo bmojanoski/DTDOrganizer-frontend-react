@@ -16,6 +16,9 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+[data-rmiz-btn-open] {
+  cursor: zoom-in!important;
+}
 
 .App-header {
   background-color: #282c34;
@@ -78,6 +81,9 @@
 }
 .text-color-primary{
   color: #004266!important;
+}
+.bg-primary{
+  background-color: #004266!important;
 }
 .text-color-secondary{
   color: #4dc7df!important;

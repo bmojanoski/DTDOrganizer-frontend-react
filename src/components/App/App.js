@@ -21,7 +21,7 @@ import Home from "../Home/Home";
 import Food from "../Food/Food";
 
 class App extends Component {
-
+    _isMounted = false;
     constructor(props) {
         super(props);
         this.state = {
@@ -32,12 +32,14 @@ class App extends Component {
             wMaterialsList: [],
             utilitiesList: [],
             eventsList: [],
-            restaurantList: [],
-            orderList: []
+            restaurantList: []
         }
     }
-
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
     componentDidMount() {
+        this._isMounted = true;
         this.loadBooks();
         this.loadCourses();
         this.loadDocuments();
@@ -45,7 +47,6 @@ class App extends Component {
         this.loadWorkMaterials();
         this.loadUtilities();
         this.loadRestaurants();
-        this.loadOrders();
     }
 
     //RESTAURANTS
@@ -56,14 +57,7 @@ class App extends Component {
             });
         });
     };
-    //ORDERS
-    loadOrders = () => {
-        DTDService.fetchOrders().then((response) => {
-            this.setState({
-                orderList: response.data
-            });
-        });
-    };
+
     //BOOKS
     loadBooks = () => {
         DTDService.fetchBooks().then((response) => {
@@ -202,9 +196,7 @@ class App extends Component {
         const restaurantState = {
             restaurantList: this.state.restaurantList
         };
-        const orderState = {
-            orderList: this.state.orderList
-        }
+
 
         const routing = (
             <Router>
@@ -267,7 +259,7 @@ class App extends Component {
 
                 {/*FOOD*/}
                 <Route path={"/food"} exact render={() =>
-                    <Food {...restaurantState} {...orderState}/>}>
+                    <Food {...restaurantState}/>}>
                 </Route>
 
                 {/*HOME PAGE*/}

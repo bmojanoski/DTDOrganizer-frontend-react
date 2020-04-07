@@ -1,7 +1,5 @@
 import axios from '../custom-axios/axios'
 
-
-
 const DTDService = {
 
     // FOOD
@@ -26,8 +24,14 @@ const DTDService = {
             }
         });
     },
+    addFood: (food) => {
+        return axios.post("/api/v1/food",food,{
+            headers:{
+                'Content-Type' : 'application/json'
+            }
+        });
+    },
     postOrder: (order) => {
-        debugger;
         return axios.post("/api/v1/orders", order ,{
             headers:{
                 'Content-Type' : 'application/json'
