@@ -1,13 +1,10 @@
 import React, {Component} from 'react';
-
-
-import Image from '../../img-01.png';
 import FrontHeader from "../Header/FrontHeader";
 
 class Home extends Component {
 
     styles = {
-        background:`url(${Image}) no-repeat`,
+        background:`url(https://i.ibb.co/zJ2fjTz/img-01.png) no-repeat`,
         float: "left",
         height: "100vh",
         width: "100%",

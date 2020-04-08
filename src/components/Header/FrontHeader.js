@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 
 
 const FrontHeader = () => {
@@ -8,10 +8,10 @@ const FrontHeader = () => {
         <header>
             <nav className="navbar navbar-expand-lg navbar-light bg-transparent fixed-top  pt-4">
                 <div className="container-fluid">
-                    <a className="navbar-brand text-primary font-weight-bold ml-4" href="/">
-                        <img alt={""} src="../logo-brand.svg" width="170" height="60"
+                    <Link className="navbar-brand text-primary font-weight-bold ml-4"  to={"/"}>
+                        <img alt={"logo"} src="https://i.ibb.co/Tgncdxr/logo-primary-01.png" width="190" height="70"
                              className="d-inline-block align-top mr-3"/>
-                    </a>
+                    </Link>
 
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarCollapse"

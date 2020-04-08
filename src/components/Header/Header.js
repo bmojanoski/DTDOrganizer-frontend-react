@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink  } from "react-router-dom";
+import { NavLink,Link  } from "react-router-dom";
 
 
   class Header extends Component {
@@ -8,9 +8,9 @@ import { NavLink  } from "react-router-dom";
       <header>
         <nav className="navbar navbar-expand-lg navbar-dark bg-header  navbar-fixed sticky-top shadow">
           <div className="container">
-            <a className="navbar-brand" href="/">
-              <img alt={""} src="../logo-brand.svg"  width="150" height="40" className="d-inline-block align-top mr-3"/>
-            </a>
+            <Link className="navbar-brand p-0 m-0"  to={"/"}>
+              <img alt={""} src="https://i.ibb.co/n3zR0yq/logo-secondary-01.png"  width="115" height="40" className="d-inline-block align-top mr-3"/>
+            </Link>
 
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
               aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,10 +25,10 @@ import { NavLink  } from "react-router-dom";
                   <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/calendar"} >Calendar</NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/resources/office"}>Resources</NavLink>
+                  <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/resources"}>Resources</NavLink>
                 </li>
                 <li className="nav-item ">
-                  <NavLink className= "nav-link text-menu-size" activeClassName="active" to={"/library/book"}>Library</NavLink>
+                  <NavLink className= "nav-link text-menu-size" activeClassName="active" to={"/library"}>Library</NavLink>
                 </li>
                 <li className="nav-item ">
                   <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/food"}>Food</NavLink>

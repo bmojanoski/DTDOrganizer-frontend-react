@@ -19,7 +19,9 @@
 [data-rmiz-btn-open] {
   cursor: zoom-in!important;
 }
-
+.card {
+  background: rgba(255,255,255,0)!important;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

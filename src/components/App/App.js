@@ -207,7 +207,7 @@ class App extends Component {
 
                 {/*RESOURCES*/}
                 <Route path={"/resources/"} exact render={() =>
-                    <ResourcesMenu/>}>
+                    <OfficeList {...officeState} onNewRequest={this.addRequest}/>}>
                 </Route>
                 <Route path={"/resources/add"} exact render={() =>
                     <ResourcesAdd onNewResourcesAdded={this.addResource}/>}>
@@ -228,7 +228,7 @@ class App extends Component {
 
                 {/*LIBRARY*/}
                 <Route path={"/library/"} exact render={() =>
-                    <LibraryMenu/>}>
+                    <BookList {...state} />}>
                 </Route>
 
                 {/*BOOKS*/}
