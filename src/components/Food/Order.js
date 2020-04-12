@@ -102,7 +102,7 @@ class Order extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        const priceSum = 0;
+        var priceSum = 0;
         this.state.inputs.price.forEach(function (element) {
             priceSum += parseInt(element)
         });
