@@ -19,7 +19,8 @@ class OfficeList extends React.Component {
         this.state = {
             checkedItems: new Map(),
             checkedIds: [],
-            show: false
+            show: false,
+            btnAddDisable:true
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -33,6 +34,7 @@ class OfficeList extends React.Component {
             this.state.checkedIds.pop(e.target.id);
         }
         this.setState(prevState => ({checkedItems: prevState.checkedItems.set(item, isChecked)}));
+        this.state.checkedIds.length === 0 ? this.setState({btnAddDisable: true }) : this.setState({btnAddDisable: false })
     }
 
     onFormSubmit = (e) => {
@@ -90,6 +92,7 @@ class OfficeList extends React.Component {
                             <form onSubmit={this.onFormSubmit}>
                                 <button type="submit"
                                         className="btn btn-sm btn-primary request-alert"
+                                        disabled={this.state.btnAddDisable}
                                 >Request selected items
                                 </button>
                             </form>

@@ -3,145 +3,201 @@
 @import '~@fullcalendar/timegrid/main.css';
 
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+    height: 40vmin;
+    pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
 }
+
 [data-rmiz-btn-open] {
-  cursor: zoom-in!important;
+    cursor: zoom-in !important;
 }
+
 .card {
-  background: rgba(255,255,255,0)!important;
+    background: rgba(255, 255, 255, 0) !important;
 }
+
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .App-link {
-  color: #61dafb;
+    color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 
 /* width */
 ::-webkit-scrollbar {
-  width: 5px;
+    width: 5px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+    background: #f1f1f1;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+    background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+    background: #555;
 }
+
 .text-prim {
-  color: #004266!important;
-  font-size: 20px;
+    color: #004266 !important;
+    font-size: 20px;
 }
+
 .text-prim:hover {
-  color: #4dc7df!important;
-  border-bottom: 2px solid black;
+    color: #4dc7df !important;
+    border-bottom: 2px solid black;
 }
 
 .bg-header {
-  background-color: #004266!important;
+    background-color: #004266 !important;
 }
+
 .bg-header-sec {
-  background-color: #4dc7df!important;
+    background-color: #4dc7df !important;
 }
-.text-color-primary{
-  color: #004266!important;
+
+.text-color-primary {
+    color: #004266 !important;
 }
-.bg-primary{
-  background-color: #004266!important;
+
+.text-color-secondary {
+    color: #4dc7df !important;
 }
-.text-color-secondary{
-  color: #4dc7df!important;
+
+.text-color-third {
+    color: #ffa73e !important;
 }
+
+.bg-primary {
+    background-color: #004266 !important;
+}
+
+.test {
+  content:'';
+  position: fixed;
+  height: 100%;
+  width: 50%;
+  left: 50%;
+  background: #116699;
+  background-size: 100% 50%
+}
+.bg-secondary {
+    background-color: #4dc7df !important;
+}
+
+.bg-third {
+    background-color: #ffa73e !important;
+}
+
+.bg-forth {
+    background-color: #e04e2d !important;
+}
+
+.text-color-secondary {
+    color: #4dc7df !important;
+}
+
 .text-menu-size {
-  font-size: 18px!important;
-  margin-right: 10px!important;
+    font-size: 18px !important;
+    margin-right: 10px !important;
 }
 
 .btn-primary {
-  background-color: #004266!important;
-  border-color: #004266!important;
+    background-color: #004266 !important;
+    border-color: #004266 !important;
 }
+
 .btn-primary:hover {
-  background-color: #4dc7df!important;
-  border-color: #4dc7df!important;
+    background-color: #4dc7df !important;
+    border-color: #4dc7df !important;
 }
+
+.btn-secondary {
+    background-color: #4dc7df !important;
+    border-color: #4dc7df !important;
+}
+
+.btn-secondary:hover {
+    background-color: #004266 !important;
+    border-color: #004266 !important;
+}
+
 .btn-outline-primary {
-  color:#004266!important;
-  border-color: #004266!important;
+    color: #004266 !important;
+    border-color: #004266 !important;
 }
+
 .btn-outline-primary:hover {
-  color:#004266!important;
-  background-color: rgba(77, 199, 223, 0.9);
-  border-color: #4dc7df!important;
+    color: #004266 !important;
+    background-color: rgba(77, 199, 223, 0.9);
+    border-color: #4dc7df !important;
 }
 
 label.btn.btn-primary.active {
-  background-color: #4dc7df!important;
-  border-color: #4dc7df!important;
+    background-color: #4dc7df !important;
+    border-color: #4dc7df !important;
 }
+
 .bg-transparent {
-  background: rgba(255,255,255,0.9);
+    background: rgba(255, 255, 255, 0.9);
 }
 
 @media only screen and (max-width: 770px) {
-  #root > div > div > div > div > div > div.fc-toolbar.fc-header-toolbar{
-    justify-items: center!important;
-    align-items: center!important;
-  }
-  div.fc-toolbar {
-    display: flex !important;
-    margin-left:10px;
-    margin-right:10px;
-  }
+    #root > div > div > div > div > div > div.fc-toolbar.fc-header-toolbar {
+        justify-items: center !important;
+        align-items: center !important;
+    }
 
-  div.fc-toolbar.fc-header-toolbar > div.fc-center > h2 {
-    font-size: 15px !important;
-    width: 100px;
-    padding: 5px 5px !important;
-  }
-  div.fc-toolbar.fc-header-toolbar > div.fc-left > div > button {
-    padding: 5px 5px !important
-  }
-  div.fc-toolbar.fc-header-toolbar > div.fc-right > div > button {
-    padding: 5px 5px !important
-  }
+    div.fc-toolbar {
+        display: flex !important;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    div.fc-toolbar.fc-header-toolbar > div.fc-center > h2 {
+        font-size: 15px !important;
+        width: 100px;
+        padding: 5px 5px !important;
+    }
+
+    div.fc-toolbar.fc-header-toolbar > div.fc-left > div > button {
+        padding: 5px 5px !important
+    }
+
+    div.fc-toolbar.fc-header-toolbar > div.fc-right > div > button {
+        padding: 5px 5px !important
+    }
 }
 

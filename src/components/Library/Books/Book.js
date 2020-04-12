@@ -7,8 +7,8 @@ const Book = (props) => {
     return (
         <Link to={`/library/book/${book.isbn}`}>
 
-        <div className="movie-card ">
-                <div className="movie-header movie-photo" style={{backgroundImage: "url(" + book.imagePath + ")"}}>
+        <div className="movie-card">
+                <div className="movie-header movie-photo  text-black" style={{backgroundImage: "url(" + book.imagePath + ")"}}>
                 </div>
 
                 <div className="movie-content">
@@ -16,13 +16,13 @@ const Book = (props) => {
                         <h1 className="movie-title text-left">{book.title}</h1>
                     </div>
                     <div className="movie-info">
-                        <div className="info-section">
+                        <div className="info-section text-black" style={{whiteSpace: "pre-line"}}>
                             <label>Authors</label>
-                            <span>
-                                {book.authors.map((book) =>
-                                    book
+
+                                {book.authors.map((book,i) =>
+                                    <p className={'small m-0'} key={i}>{book}</p>
                                 )}
-                            </span>
+
                         </div>
 
                         <div className="info-section text-right">

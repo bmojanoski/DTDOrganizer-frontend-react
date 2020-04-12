@@ -22,6 +22,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Header from "../Header/Header";
 
 export default class Calendar extends React.Component {
+    _isMounted = false;
 
     constructor(props) {
         super(props);
@@ -43,42 +44,23 @@ export default class Calendar extends React.Component {
             end: "",
             description: "",
             color: "",
-            allDay: "",
+            allDay: false,
             calendarEventType: ""
         };
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleInputCheckboxChange= this.handleInputCheckboxChange.bind(this)
     }
 
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
 
     componentDidMount() {
+        this._isMounted = true;
         (async () => {
             const response = await fetch(`http://localhost:8080/api/v1/calendar`);
             const json = await response.json();
-
-            this.setState({
-                events: json.map(function (event) {
-                    return {
-                        id: event.id,
-                        title: event.title,
-                        start: event.start_date,
-                        end: event.end_date,
-                        description: event.description,
-                        color: event.color,
-                        allDay: event.allDay,
-                        calendarEventType: event.calendarEventType
-                    }
-                })
-            });
-        })();
-    }
-
-     componentDidUpdate(prevProps, prevState) {
-        if (prevState.events.length !== this.state.events.length) {
-
-            (async () => {
-                const response = await fetch(`http://localhost:8080/api/v1/calendar`);
-                const json = await response.json();
-
+            if (this._isMounted) {
                 this.setState({
                     events: json.map(function (event) {
                         return {
@@ -93,6 +75,33 @@ export default class Calendar extends React.Component {
                         }
                     })
                 });
+            }
+        })();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        this._isMounted = true;
+        if (prevState.events.length !== this.state.events.length) {
+
+            (async () => {
+                const response = await fetch(`http://localhost:8080/api/v1/calendar`);
+                const json = await response.json();
+                if (this._isMounted) {
+                    this.setState({
+                        events: json.map(function (event) {
+                            return {
+                                id: event.id,
+                                title: event.title,
+                                start: event.start_date,
+                                end: event.end_date,
+                                description: event.description,
+                                color: event.color,
+                                allDay: event.allDay,
+                                calendarEventType: event.calendarEventType
+                            }
+                        })
+                    });
+                }
             })();
         }
     }
@@ -156,7 +165,7 @@ export default class Calendar extends React.Component {
         $('.allDay').val(arg.allDay);
     };
 
-    handleInputChange(e){
+    handleInputChange(e) {
         const target = e.target;
         const value = target.value;
         const name = target.name;
@@ -165,307 +174,379 @@ export default class Calendar extends React.Component {
             [name]: value
         });
     }
+    handleInputCheckboxChange() {
+        debugger;
+        this.setState({
+            allDay: !this.state.allDay
+        });
+    }
+
     render() {
         return (
             <><Header/>
-            <div className="container">
-                <div className="row">
-                    <div className="mt-4 " style={{height: 85 + 'vh'}}>
+                <div className="container">
+                    <div className="row">
+                        <div className="mt-4 " style={{height: 85 + 'vh'}}>
 
-                        {/*/!*EDIT - MODAL*!/*/}
-                        <Modal
-                            show={this.state.showEditEventModal}
-                            onHide={this.handleCloseEditModal}
-                            size={"lg"}
-                        >
-                            <Modal.Header>
-                                <Modal.Title id="example-modal-sizes-title-sm modal-title">
-                                    Edit event
-                                </Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                <div className="container">
-                                    <div className="row">
-                                        <div className="col-12">
-                                            <form onSubmit={this.onFormSubmit.bind(this)} className={"row"}>
-                                                <div className="col-6">
-                                                    <div className="form-group">
-                                                        <label htmlFor="title">Title: </label>
-                                                        <input type="text"
-                                                               className="id"
-                                                               id="id"
-                                                               ref="id"
-                                                               hidden
-                                                               name="id"
-                                                               value={this.state.id}/>
-                                                        <input type="text"
-                                                               className="form-control form-control-sm title"
-                                                               id="title"
-                                                               name="title"
-                                                               value={this.state.title}
-                                                               onChange={this.handleInputChange}/>
-                                                    </div>
-                                                    <div className="form-group">
-                                                        <label>Start date: </label>
-                                                        <DatePicker
-                                                            className={"form-control form-control-sm start_date"}
-                                                            selected={this.state.startDate}
-                                                            onChange={this.handleChangeInDatePickerStart}
-                                                            showTimeSelect
-                                                            timeIntervals={15}
-                                                            withPortal
-                                                            minDate={new Date()}
-                                                            showDisabledMonthNavigation
-                                                            dateFormat="MMMM d, yyyy h:mm aa"
-                                                            ref="startDate"
-                                                        />
-
-                                                    </div>
-                                                    <div className="form-group">
-                                                        <label>End date: </label>
-                                                        <DatePicker
-                                                            className={"form-control form-control-sm end_date"}
-                                                            selected={this.state.endDate}
-                                                            onChange={this.handleChangeInDatePickerEnd}
-                                                            showTimeSelect
-                                                            timeIntervals={15}
-                                                            dateFormat="MMMM d, yyyy h:mm aa"
-                                                            withPortal
-                                                            minDate={new Date()}
-                                                            showDisabledMonthNavigation
-                                                            ref="endDate"
-                                                        />
-                                                    </div>
-                                                    <div className="form-group">
-                                                        <label htmlFor="description">Description</label>
-                                                        <input type="text"
-                                                               className="form-control form-control-sm description"
-                                                               id="description"
-                                                               name="description"
-                                                               value={this.state.description}
-                                                               onChange={this.handleInputChange}/>
-                                                    </div>
-                                                </div>
-                                                <div className="col-6">
-                                                    <div className="form-group">
-                                                        <label htmlFor="color">Color:</label>
-                                                        <input type="text"
-                                                               className="form-control form-control-sm color"
-                                                               id="color"
-                                                               name="color"
-                                                               value={this.state.color}
-                                                               onChange={this.handleInputChange}/>
-                                                    </div>
-                                                    <div className="form-group">
-                                                        <label htmlFor="allDay">allDay:</label>
-                                                        <input type="text"
-                                                               className="form-control form-control-sm allDay"
-                                                               id="allDay"
-                                                               name="allDay"
-                                                               value={this.state.allDay}
-                                                               onChange={this.handleInputChange}/>
-                                                    </div>
-                                                    <div className="form-group">
-                                                        <label htmlFor="calendarEventType">calendarEventType:</label>
-                                                        <input type="text"
-                                                               className="form-control form-control-sm calendarEventType"
-                                                               id="calendarEventType"
-                                                               name="calendarEventType"
-                                                               value={this.state.calendarEventType}
-                                                               onChange={this.handleInputChange}
-                                                        />
-                                                    </div>
-                                                    <div className="row form-group">
-                                                        <div className="col-md-12 text-right  p-0">
-
-                                                            <button type="submit"
-                                                                    className="btn btn-sm btn-primary mt-2"
-                                                                    title="Edit"
-                                                                    hidden={this.state.edit}
-                                                            ><i className="fa fa-fw fa-save"/> Edit
-                                                            </button>
+                            {/*/!*EDIT - MODAL*!/*/}
+                            <Modal
+                                show={this.state.showEditEventModal}
+                                onHide={this.handleCloseEditModal}
+                                size={"lg"}
+                            >
+                                <Modal.Header closeButton className={"bg-secondary text-white font-weight-bold"}>
+                                    <Modal.Title id="example-modal-sizes-title-sm modal-title">
+                                        Edit event
+                                    </Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    <div className="container">
+                                        <div className="row">
+                                            <div className="col-12">
+                                                <form onSubmit={this.onFormSubmit.bind(this)} className={"row"}>
+                                                    <div className="col-6">
+                                                        <div className="form-group">
+                                                            <label htmlFor="title">Title: </label>
+                                                            <input type="text"
+                                                                   className="id"
+                                                                   id="id"
+                                                                   ref="id"
+                                                                   hidden
+                                                                   name="id"
+                                                                   value={this.state.id}
+                                                                   onChange={this.handleInputChange}/>
+                                                            <input type="text"
+                                                                   className="form-control form-control-sm title"
+                                                                   id="title"
+                                                                   name="title"
+                                                                   placeholder={"Set title for your event"}
+                                                                   value={this.state.title}
+                                                                   onChange={this.handleInputChange}/>
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <label>Start date: </label>
+                                                            <DatePicker
+                                                                className={"form-control form-control-sm start_date"}
+                                                                selected={this.state.startDate}
+                                                                onChange={this.handleChangeInDatePickerStart}
+                                                                showTimeSelect
+                                                                timeIntervals={15}
+                                                                withPortal
+                                                                minDate={new Date()}
+                                                                showDisabledMonthNavigation
+                                                                dateFormat="MMMM d, yyyy h:mm aa"
+                                                                ref="startDate"
+                                                            />
 
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </form>
+                                                        <div className="form-group">
+                                                            <label>End date: </label>
+                                                            <DatePicker
+                                                                className={"form-control form-control-sm end_date"}
+                                                                selected={this.state.endDate}
+                                                                onChange={this.handleChangeInDatePickerEnd}
+                                                                showTimeSelect
+                                                                timeIntervals={15}
+                                                                dateFormat="MMMM d, yyyy h:mm aa"
+                                                                withPortal
+                                                                minDate={new Date()}
+                                                                showDisabledMonthNavigation
+                                                                ref="endDate"
 
-                                        </div>
-                                    </div>
-                                    <div className="row text-right">
-                                        <div className="col-12">
-                                            <button onClick={this.handleDeleteEvent.bind(this)}
-                                                    className="btn btn-sm btn-danger mt-2"
-                                                    title="Delete">
-                                                <i className="fa fa-fw fa-times"/> Delete
-                                            </button>
-
-                                            <button onClick={this.handleCloseEditModal}
-                                                    className="btn btn-sm btn-danger ml-2 mt-2"
-                                                    title="Cancel">
-                                                <i className="fa fa-fw fa-times"/> Cancel
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Modal.Body>
-                        </Modal>
-
-                        {/*ADD NEW EVENT - MODAL*/}
-                        <Modal
-                            show={this.state.showNewEventModal}
-                            onHide={this.handleCloseNewEventModal}
-                            size={"lg"}
-                        >
-                            <Modal.Header>
-                                <Modal.Title id="example-modal-sizes-title-sm modal-title">
-                                    Add new event
-                                </Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                <div className="container">
-                                    <div className="row">
-                                        <div className="col-12">
-                                            <form onSubmit={this.onFormSubmitAddNewEvent} className={"row"}>
-                                                <div className="col-6">
-                                                    <div className="form-group">
-                                                        <label htmlFor="title">Title: </label>
-                                                        <input type="text" className="id" id="id" hidden/>
-                                                        <input type="text"
-                                                               className="form-control form-control-sm title"
-                                                               id="title"/>
-                                                    </div>
-                                                    <div className="form-group">
-                                                        <label>Start date: </label>
-                                                        <DatePicker
-                                                            className={"form-control form-control-sm start_date"}
-                                                            selected={this.state.startDate}
-                                                            onChange={this.handleChangeInDatePickerStart}
-                                                            showTimeSelect
-                                                            timeIntervals={15}
-                                                            withPortal
-                                                            minDate={new Date()}
-                                                            showDisabledMonthNavigation
-                                                            dateFormat="MMMM d, yyyy h:mm aa"
-                                                        />
-
-                                                    </div>
-                                                    <div className="form-group">
-                                                        <label>End date: </label>
-                                                        <DatePicker
-                                                            className={"form-control form-control-sm end_date"}
-                                                            selected={this.state.endDate}
-                                                            onChange={this.handleChangeInDatePickerEnd}
-                                                            showTimeSelect
-                                                            timeIntervals={15}
-                                                            dateFormat="MMMM d, yyyy h:mm aa"
-                                                            withPortal
-                                                            minDate={new Date()}
-                                                            showDisabledMonthNavigation
-                                                        />
-                                                    </div>
-                                                    <div className="form-group">
-                                                        <label htmlFor="description">Description</label>
-                                                        <input type="text"
-                                                               className="form-control form-control-sm description"
-                                                               id="description"/>
-                                                    </div>
-                                                </div>
-                                                <div className="col-6">
-                                                    <div className="form-group">
-                                                        <label htmlFor="color">Color:</label>
-                                                        <input type="text"
-                                                               className="form-control form-control-sm color"
-                                                               id="color"/>
-                                                    </div>
-                                                    <div className="form-group">
-                                                        <label htmlFor="allDay">allDay:</label>
-                                                        <input type="text"
-                                                               className="form-control form-control-sm allDay"
-                                                               id="allDay"/>
-                                                    </div>
-                                                    <div className="form-group">
-                                                        <label htmlFor="calendarEventType">calendarEventType:</label>
-                                                        <input type="text"
-                                                               className="form-control form-control-sm calendarEventType"
-                                                               id="calendarEventType"/>
-                                                    </div>
-                                                    <div className="row form-group">
-                                                        <div className="col-md-12 text-right  p-0">
-                                                            <button type="submit"
-                                                                    className="btn btn-sm btn-primary mt-2"
-                                                                    title="Save"
-                                                                    hidden={this.state.save}
-                                                            ><i className="fa fa-fw fa-save"/> Save
-                                                            </button>
+                                                            />
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <label htmlFor="description">Description</label>
+                                                            <input type="text"
+                                                                   className="form-control form-control-sm description"
+                                                                   id="description"
+                                                                   name="description"
+                                                                   placeholder={"Set description for your event"}
+                                                                   value={this.state.description}
+                                                                   onChange={this.handleInputChange}/>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </form>
+                                                    <div className="col-6">
+                                                        <div className="form-group">
+                                                            <label htmlFor="color">Color:</label>
+                                                            <select value={this.state.color}
+                                                                    name="color"
+                                                                    onChange={this.handleInputChange}
+                                                                    className="form-control form-control-sm selectEdit">
+                                                                <option defaultValue={"Choose color"}>Choose color
+                                                                </option>
+                                                                <option value="#004266"
+                                                                        className={"bg-primary text-white"}>Meeting
+                                                                    color
+                                                                </option>
+                                                                <option value="#4dc7df"
+                                                                        className={"bg-secondary text-white"}>Room color
+                                                                </option>
+                                                                <option value="#ffa73e"
+                                                                        className={"bg-third text-white"}>Birthday color
+                                                                </option>
+                                                                <option value="#e04e2d"
+                                                                        className={"bg-forth text-white"}>Other
+                                                                </option>
+                                                            </select>
+                                                        </div>
 
+                                                        <div className="form-group">
+                                                            <label
+                                                                htmlFor="calendarEventType">calendarEventType:</label>
+                                                            <select id="calendarEventType"
+                                                                    name="calendarEventType"
+                                                                    onChange={this.handleInputChange}
+                                                                    value={this.state.calendarEventType}
+                                                                    className="form-control form-control-sm calendarEventType">
+                                                                <option defaultValue={"Choose event type"}>Choose event type</option>
+                                                                <option value="Meeting">Meeting</option>
+                                                                <option value="Birthday">Birthday</option>
+                                                                <option value="Room">Room</option>
+                                                                <option value="Other">Other event</option>
+                                                            </select>
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <div className="custom-control custom-switch">
+                                                                <input
+                                                                    name="allDay"
+                                                                    type="checkbox"
+                                                                    className="custom-control-input"
+                                                                    id="allDay"
+                                                                    checked={this.state.allDay}
+                                                                    onChange={this.handleInputCheckboxChange} />
+
+                                                                <label className="custom-control-label" htmlFor="allDay">
+                                                                    All Day
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div className="row form-group">
+                                                            <div className="col-md-12 text-right  p-0">
+
+                                                                <button type="submit"
+                                                                        className="btn btn-sm btn-primary mt-2 mr-3"
+                                                                        title="Edit"
+                                                                        hidden={this.state.edit}
+                                                                ><i className="fa fa-fw fa-save"/> Edit
+                                                                </button>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                        <div className="row text-right">
+                                            <div className="col-12">
+                                                <button onClick={this.handleDeleteEvent.bind(this)}
+                                                        className="btn btn-sm btn-secondary mt-2"
+                                                        title="Delete">
+                                                    <i className="fa fa-trash"/> Delete
+                                                </button>
+
+                                                <button onClick={this.handleCloseEditModal}
+                                                        className="btn btn-sm btn-secondary ml-2 mt-2 "
+                                                        title="Cancel">
+                                                    <i className="fa fa-fw fa-times"/> Cancel
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="row text-right">
-                                        <div className="col-12">
-                                            <button onClick={this.handleCloseNewEventModal}
-                                                    className="btn btn-sm btn-danger ml-2 mt-2"
-                                                    title="Cancel">
-                                                <i className="fa fa-fw fa-times"/> Cancel
-                                            </button>
+                                </Modal.Body>
+                            </Modal>
+
+                            {/*ADD NEW EVENT - MODAL*/}
+                            <Modal
+                                show={this.state.showNewEventModal}
+                                onHide={this.handleCloseNewEventModal}
+                                size={"lg"}
+                            >
+                                <Modal.Header closeButton className={"bg-secondary text-white font-weight-bold"}>
+                                    <Modal.Title id="example-modal-sizes-title-sm modal-title">
+                                        Add new event
+                                    </Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    <div className="container">
+                                        <div className="row">
+                                            <div className="col-12">
+                                                <form onSubmit={this.onFormSubmitAddNewEvent} className={"row"}>
+                                                    <div className="col-6">
+                                                        <div className="form-group">
+                                                            <label htmlFor="title">Title: </label>
+                                                            <input type="text" className="id" id="id" hidden/>
+                                                            <input type="text"
+                                                                   placeholder={"Set title for your event"}
+                                                                   className="form-control form-control-sm title"
+                                                                   id="title"/>
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <label>Start date: </label>
+                                                            <DatePicker
+                                                                className={"form-control form-control-sm start_date"}
+                                                                selected={this.state.startDate}
+                                                                onChange={this.handleChangeInDatePickerStart}
+                                                                showTimeSelect
+                                                                timeIntervals={15}
+                                                                withPortal
+                                                                minDate={new Date()}
+                                                                showDisabledMonthNavigation
+                                                                dateFormat="MMMM d, yyyy h:mm aa"
+                                                            />
+
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <label>End date: </label>
+                                                            <DatePicker
+                                                                className={"form-control form-control-sm end_date"}
+                                                                selected={this.state.endDate}
+                                                                onChange={this.handleChangeInDatePickerEnd}
+                                                                showTimeSelect
+                                                                timeIntervals={15}
+                                                                dateFormat="MMMM d, yyyy h:mm aa"
+                                                                withPortal
+                                                                minDate={new Date()}
+                                                                showDisabledMonthNavigation
+                                                            />
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <label htmlFor="description">Description</label>
+                                                            <input type="text"
+                                                                   className="form-control form-control-sm description"
+                                                                   placeholder={"Set description for your event"}
+                                                                   id="description"/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-6">
+                                                        <div className="form-group">
+                                                            <label htmlFor="color">Color:</label>
+                                                            <select id="color"
+                                                                    name="color"
+                                                                    onChange={this.handleInputChange}
+                                                                    className="form-control form-control-sm color">
+                                                                <option defaultValue={"Choose color"}>Choose color
+                                                                </option>
+                                                                <option value="#004266"
+                                                                        className={"test text-white"}>Meeting color
+                                                                </option>
+                                                                <option value="#4dc7df"
+                                                                        className={"bg-secondary text-white"}>Room color
+                                                                </option>
+                                                                <option value="#ffa73e"
+                                                                        className={"bg-third text-white"}>Birthday color
+                                                                </option>
+                                                                <option value="#e04e2d"
+                                                                        className={"bg-forth text-white"}>Other
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <label
+                                                                htmlFor="calendarEventType">Choose event type</label>
+                                                            <select id="calendarEventType"
+                                                                    name="calendarEventType"
+                                                                    onChange={this.handleInputChange}
+                                                                    className="form-control form-control-sm calendarEventType">
+                                                                <option defaultValue={"Choose event type"}>Choose event type</option>
+                                                                <option value="Meeting">Meeting</option>
+                                                                <option value="Birthday">Birthday</option>
+                                                                <option value="Room">Room</option>
+                                                                <option value="Other">Other event</option>
+                                                            </select>
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <div className="custom-control custom-switch">
+                                                                <input
+                                                                    name="allDay"
+                                                                    type="checkbox"
+                                                                    className="custom-control-input"
+                                                                    id="allDay"
+                                                                    checked={this.state.allDay}
+                                                                    onChange={this.handleInputCheckboxChange} />
+
+                                                                <label className="custom-control-label" htmlFor="allDay">
+                                                                    All Day
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div className="row form-group">
+                                                            <div className="col-md-12 text-right  p-0">
+                                                                <button type="submit"
+                                                                        className="btn btn-sm btn-primary mt-2 mr-3"
+                                                                        title="Save"
+                                                                        hidden={this.state.save}
+                                                                ><i className="fa fa-fw fa-save"/> Save
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                        <div className="row text-right">
+                                            <div className="col-12">
+                                                <button onClick={this.handleCloseNewEventModal}
+                                                        className="btn btn-sm btn-secondary ml-2 mt-2"
+                                                        title="Cancel">
+                                                    <i className="fa fa-fw fa-times"/> Cancel
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </Modal.Body>
-                        </Modal>
+                                </Modal.Body>
+                            </Modal>
 
-                        <FullCalendar
-                            defaultView="dayGridMonth"
-                            eventTimeFormat={{
-                                hour: '2-digit',
-                                minute: '2-digit',
-                                hour12: false,
-                                meridiem: false
-                            }}
-                            displayEventEnd={true}
-                            timeZone={'local'}
-                            firstDay={1}
-                            header={{
-                                left: 'dayGridMonth,timeGridWeek,timeGridDay',
-                                center: 'title',
-                                right: 'prev,next today'
-                            }}
-                            businessHours={[ // specify an array instead
-                                {
-                                    daysOfWeek: [1, 2, 3, 4, 5],
-                                    startTime: '08:00', // 8am
-                                    endTime: '18:00' // 6pm
-                                },
+                            <FullCalendar
+                                defaultView="dayGridMonth"
+                                eventTimeFormat={{
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: false,
+                                    meridiem: false
+                                }}
+                                displayEventEnd={true}
+                                timeZone={'local'}
+                                firstDay={1}
+                                header={{
+                                    left: 'dayGridMonth,timeGridWeek,timeGridDay',
+                                    center: 'title',
+                                    right: 'prev,next today'
+                                }}
+                                businessHours={[ // specify an array instead
+                                    {
+                                        daysOfWeek: [1, 2, 3, 4, 5],
+                                        startTime: '08:00', // 8am
+                                        endTime: '18:00' // 6pm
+                                    },
 
-                            ]}
-                            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, bootstrapPlugin]}
-                            themeSystem={"bootstrap"}
+                                ]}
+                                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, bootstrapPlugin]}
+                                themeSystem={"bootstrap"}
 
-                            events={this.state.events}
+                                events={this.state.events}
 
-                            eventRender={this.eventRender}
+                                eventRender={this.eventRender}
+                                eventTextColor={"White"}
+                                select={this.handleDateClick}
+                                eventResize={this.eventResize}
+                                eventClick={this.eventClicked}
 
-                            select={this.handleDateClick}
-                            eventResize={this.eventResize}
-                            eventClick={this.eventClicked}
-
-                            selectMirror={true}
-                            height={"parent"}
-                            weekNumbers={true}
-                            weekNumbersWithinDays={true}
-                            selectable={true}
-                            editable={true}
-                            unselectAuto={true}
-                            nowIndicator={true}
-                            eventDrop={this.eventResize}
-                        />
+                                selectMirror={true}
+                                height={"parent"}
+                                weekNumbers={true}
+                                weekNumbersWithinDays={true}
+                                selectable={true}
+                                editable={true}
+                                unselectAuto={true}
+                                nowIndicator={true}
+                                eventDrop={this.eventResize}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
             </>
         );
     }
@@ -517,6 +598,7 @@ export default class Calendar extends React.Component {
         this.deleteEvent(this.state.id);
 
     };
+
     //When edit form is submited
     onFormSubmit = (arg) => {
 
@@ -527,20 +609,24 @@ export default class Calendar extends React.Component {
             title: arg.target.title.value,
             start_date: moment(this.state.startDate).format('YYYY-MM-DD HH:mm'),
             end_date: moment(this.state.endDate).format('YYYY-MM-DD HH:mm'),
-            allDay: arg.target.allDay.value,
+            allDay: this.state.allDay,
             description: arg.target.description.value,
             calendarEventType: arg.target.calendarEventType.value,
             color: arg.target.color.value
 
         };
-
+        debugger;
         this.setState(prevState => ({
             events: prevState.events.map(
                 specificEvent => specificEvent.id === parseInt(event.id) ? {
                     ...specificEvent,
                     start: moment(event.start_date).format('YYYY-MM-DD HH:mm'),
                     end: moment(event.end_date).format('YYYY-MM-DD HH:mm'),
-                    allDay: event.allDay
+                    allDay: event.allDay,
+                    color: event.color,
+                    description: event.description,
+                    title: event.title,
+                    calendarEventType: event.calendarEventType
                 } : specificEvent
             )
 
@@ -556,7 +642,7 @@ export default class Calendar extends React.Component {
             title: arg.target.title.value,
             start_date: moment(this.state.startDate).format('YYYY-MM-DD HH:mm'),
             end_date: moment(this.state.endDate).format('YYYY-MM-DD HH:mm'),
-            allDay: arg.target.allDay.value,
+            allDay: this.state.allDay,
             description: arg.target.description.value,
             calendarEventType: arg.target.calendarEventType.value,
             color: arg.target.color.value

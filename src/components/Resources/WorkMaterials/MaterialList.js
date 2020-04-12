@@ -10,6 +10,7 @@ import {NavLink} from "react-router-dom";
 
 import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Footer from "../../Footer/Footer";
 
 toast.configure();
 
@@ -20,7 +21,9 @@ class MaterialList extends React.Component {
 
         this.state = {
             checkedItems: new Map(),
-            checkedIds: []
+            checkedIds: [],
+            show: false,
+            btnAddDisable:true
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -34,6 +37,7 @@ class MaterialList extends React.Component {
             this.state.checkedIds.pop(e.target.id);
         }
         this.setState(prevState => ({checkedItems: prevState.checkedItems.set(item, isChecked)}));
+        this.state.checkedIds.length === 0 ? this.setState({btnAddDisable: true }) : this.setState({btnAddDisable: false })
     }
 
     onFormSubmit = (e) => {
@@ -41,12 +45,11 @@ class MaterialList extends React.Component {
         if (this.state.checkedIds.length > 0) {
             this.notifySuccess();
             const ai = Math.floor((Math.random() * 999999) + 1);
-            var name = ai.toString();
+            const name = ai.toString();
             const newRequest = {
                 "request_name": name,
                 "id": this.state.checkedIds
             };
-
 
             this.props.onNewRequest(newRequest);
             this.setState(prevState => ({checkedItems: prevState.checkedItems = new Map()}));
@@ -73,6 +76,9 @@ class MaterialList extends React.Component {
             draggable: true,
         });
     };
+    openAdmin = () => {
+        this.setState({show: !this.state.show})
+    };
 
     render() {
 
@@ -81,25 +87,14 @@ class MaterialList extends React.Component {
                 <ResourcesMenu wmaterials={"active"}/>
                 <div className="container">
                     <div className="row justify-content-center  align-items-center">
-                        <div className="col-3 p-0 text-right">
+                        <div className="col-12 p-0 text-center">
                             <form onSubmit={this.onFormSubmit}>
                                 <button type="submit"
-                                        className="btn  btn-sm  btn-outline-primary request-alert"
+                                        className="btn  btn-sm  btn-primary request-alert"
+                                        disabled={this.state.btnAddDisable}
                                 >Request selected items
                                 </button>
                             </form>
-                        </div>
-                        <div className="col-1 p-0">
-                            <span className="font-weight-light text-color-primary">OR</span>
-                        </div>
-                        <div className="col-3 p-0 text-left">
-                            <NavLink className={"text-reset"} to={"/resources/add"}>
-                                <input type="button"
-                                       className="btn  btn-sm  btn-outline-primary"
-                                       value="Add new resources"
-                                       name="options"
-                                       id="option3"/>
-                            </NavLink>
                         </div>
                     </div>
                     <div className="row justify-content-center">
@@ -121,6 +116,23 @@ class MaterialList extends React.Component {
                         )}
                     </div>
                 </div>
+                <div className="container-fluid bg-yellow my-2" hidden={!this.state.show}>
+                    <hr/>
+                    <div className="row mb-3">
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-10 col-12">
+                            <span className={"h6"}> ADMIN PANEL</span>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-10 col-12">
+                            <NavLink className={"text-reset"} to={"/resources/add"}>
+                                <input type="button" className="btn btn-sm btn-outline-primary"
+                                       value="Add new resources" name="options" id="option3"/>
+                            </NavLink>
+                        </div>
+                    </div>
+                </div>
+                <Footer openAdmin={this.openAdmin}/>
             </div>
         );
     }

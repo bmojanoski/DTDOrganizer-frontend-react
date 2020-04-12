@@ -30,18 +30,21 @@ class Food extends Component {
     loadOrders = () => {
         DTDService.fetchOrders().then((response) => {
             const newOrder = response.data;
-            this.setState((prevState) => {
-                const newOrderRef = [...prevState.orderList, newOrder];
-                return {
-                    "orderList": newOrderRef
-                }
-            });
-
+            if (this._isMounted) {
+                this.setState((prevState) => {
+                    const newOrderRef = [...prevState.orderList, newOrder];
+                    return {
+                        "orderList": newOrderRef
+                    }
+                });
+            }
         });
     };
 
     openAdmin = () => {
-        this.setState({show: !this.state.show})
+        if (this._isMounted) {
+            this.setState({show: !this.state.show})
+        }
     };
 
     render() {

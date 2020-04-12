@@ -4,6 +4,7 @@ import DTDService from "../../../repository/axiosConsultationsRepository";
 import Header from "../../Header/Header";
 
 class BookDetails extends Component {
+    _isMounted = false;
 
     constructor(props) {
         super(props);
@@ -14,6 +15,7 @@ class BookDetails extends Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
         this.fetchData(this.state.isbn);
     }
 
@@ -25,12 +27,14 @@ class BookDetails extends Component {
     fetchData(isbn) {
         DTDService.fetchBooksById({isbn}).then((response) => {
             const newBook = response.data;
-            this.setState((prevState) => {
-                const newBookRef = [...prevState.books, newBook];
-                return {
-                    "books": newBookRef
-                }
-            })
+            if (this._isMounted = true) {
+                this.setState((prevState) => {
+                    const newBookRef = [...prevState.books, newBook];
+                    return {
+                        "books": newBookRef
+                    }
+                })
+            }
         })
     }
 
@@ -54,9 +58,12 @@ class BookDetails extends Component {
 
                                         <div className="card-body p-0 pt-4 text-left">
                                             <div className="card-text h4">{book.title}</div>
-                                            <p className="lead">
+                                            <p className="lead mb-2">
                                                 {book.publisher}
                                             </p>
+                                            <div className="text-left mb-4">
+                                                <span className="mb-2">ISBN: {book.isbn}</span>
+                                            </div>
                                             <div className="text-left">
                                                 <span className=""><i className="fa fa-star "/> {book.rating}</span>
                                                 <span className="pl-4"><i className="fa fa-book"/> {book.pages}</span>

@@ -102,12 +102,12 @@ class Order extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        var priceSum = 0;
+        const priceSum = 0;
         this.state.inputs.price.forEach(function (element) {
             priceSum += parseInt(element)
         });
 
-        var food = [];
+        const food = [];
         for (var i = 0; i < this.state.inputs.food.length; i++) {
             if (this.state.inputs.food[i].length > 0 && this.state.inputs.price[i].length > 0) {
                 food.push({

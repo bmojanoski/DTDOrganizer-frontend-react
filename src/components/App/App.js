@@ -10,8 +10,6 @@ import CourseList from "../Library/Courses/CoursesList";
 import DocumentList from "../Library/Documents/DocumentList";
 import CourseAdd from "../Library/Courses/CourseAdd";
 import DocumentAdd from "../Library/Documents/DocumentAdd";
-import LibraryMenu from "../Library/Menu/Menu";
-import ResourcesMenu from "../Resources/Menu/ResourcesMenu";
 import OfficeList from "../Resources/Office/OfficeList";
 import MaterialList from "../Resources/WorkMaterials/MaterialList";
 import UtilityList from "../Resources/Utilities/UtilityList";
@@ -22,6 +20,7 @@ import Food from "../Food/Food";
 
 class App extends Component {
     _isMounted = false;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -35,9 +34,11 @@ class App extends Component {
             restaurantList: []
         }
     }
+
     componentWillUnmount() {
         this._isMounted = false;
     }
+
     componentDidMount() {
         this._isMounted = true;
         this.loadBooks();
@@ -66,16 +67,39 @@ class App extends Component {
             });
         });
     };
-    addBook = (book) => {
-        DTDService.addBook(book).then((response) => {
-            const newBook = response.data;
-            this.setState((prevState) => {
-                const newBookRef = [...prevState.bookList, newBook];
-                return {
-                    "bookList": newBookRef
-                }
+    addBook = (isbn,qty) => {
+        fetch('https://www.googleapis.com/books/v1/volumes?q=isbn:' + isbn + '&key=AIzaSyARYJrBPVJ9B77JveSDkwPI5IvWUGVHe1M')
+            .then((response) => {
+                return response.json();
             })
-        })
+            .then((data) => {
+                const authors = []
+                data.items[0].volumeInfo.authors.forEach(x=> authors.push(x))
+                const newBook = {
+                    "isbn": data.items[0].volumeInfo.industryIdentifiers[0].identifier,
+                    "title": data.items[0].volumeInfo.title,
+                    "authors": authors,
+                    "pages": data.items[0].volumeInfo.pageCount,
+                    "description": data.items[0].volumeInfo.description.slice(0, 255),
+                    "publisher": data.items[0].volumeInfo.publisher,
+                    "publishedDate": data.items[0].volumeInfo.publishedDate,
+                    "rating": data.items[0].volumeInfo.ratingsCount,
+                    "imagePath": data.items[0].volumeInfo.imageLinks.thumbnail,
+                    "Qty": qty,
+                };
+
+                DTDService.addBook(newBook).then((response) => {
+                        const newBookk = response.data;
+                        debugger;
+                        this.setState((prevState) => {
+                            const newBookRef = [...prevState.bookList, newBookk];
+                            return {
+                                "bookList": newBookRef
+                            }
+                        })
+                    }
+                )
+            });
     };
 
     //COURSES
