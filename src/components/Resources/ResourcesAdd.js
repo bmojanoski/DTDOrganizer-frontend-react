@@ -1,5 +1,6 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom';
+import {NavLink, useHistory} from 'react-router-dom';
+import Header from "../Header/Header";
 
 const ResourcesAdd = (props) => {
 
@@ -23,6 +24,11 @@ const ResourcesAdd = (props) => {
 
     return (
         <div>
+            <Header/>
+            <NavLink className={"text-reset"} to={"/resources"}>
+                <input type="button" className="btn btn-sm btn-outline-primary"
+                       value="Back" name="options" id="option3"/>
+            </NavLink>
             <div className="card-body">
                 <div className="card-text">
                     <div className="consultations">

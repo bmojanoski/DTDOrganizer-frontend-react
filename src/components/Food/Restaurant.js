@@ -7,7 +7,7 @@ const Restaurant = (props) => {
     const {restaurant} = props;
     return (
         <Zoom>
-            <div className={"shadow"}>
+            <div className={"shadow"} id={"restaurant-card"}>
                 <img src={props.restaurant.image} style={{width: 300 + "px", height: 280 + "px"}} alt={""}/>
                 <div className={"font-weight-bold"}>{restaurant.name}</div>
                 <span className={"small"}>Price Range: {restaurant.priceRange}</span>

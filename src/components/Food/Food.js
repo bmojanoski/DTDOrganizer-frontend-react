@@ -14,7 +14,7 @@ class Food extends Component {
 
         this.state = {
             orderList: [],
-            test: false
+            show: false
         }
     }
 
@@ -41,7 +41,7 @@ class Food extends Component {
     };
 
     openAdmin = () => {
-        this.setState({test: !this.state.test})
+        this.setState({show: !this.state.show})
     };
 
     render() {
@@ -72,7 +72,7 @@ class Food extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="container-fluid bg-yellow" hidden={!this.state.test}>
+                <div className="container-fluid bg-yellow" hidden={!this.state.show}>
                     <div className="row">
                         <div className="col-lg-12 col-md-12 col-sm-12 col-10 col-12">
                             ADMIN PANEL

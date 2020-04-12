@@ -8,6 +8,7 @@ import {NavLink} from "react-router-dom";
 
 import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Footer from "../../Footer/Footer";
 
 toast.configure();
 
@@ -17,7 +18,8 @@ class OfficeList extends React.Component {
         super(props);
         this.state = {
             checkedItems: new Map(),
-            checkedIds: []
+            checkedIds: [],
+            show: false
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -46,8 +48,10 @@ class OfficeList extends React.Component {
             };
 
             this.props.onNewRequest(newRequest);
-            this.setState(prevState => ({checkedItems: prevState.checkedItems = new Map()}));
-            this.setState(prevState => ({checkedIds: prevState.checkedIds = []}));
+            this.setState(prevState => ({
+                checkedItems: prevState.checkedItems = new Map(),
+                checkedIds: prevState.checkedIds = []
+            }));
         } else {
             this.notifyWarning();
         }
@@ -70,6 +74,9 @@ class OfficeList extends React.Component {
             draggable: true,
         });
     };
+    openAdmin = () => {
+        this.setState({show: !this.state.show})
+    };
 
 
     render() {
@@ -79,25 +86,14 @@ class OfficeList extends React.Component {
 
                 <div className="container">
                     <div className="row justify-content-center  align-items-center">
-                        <div className="col-3 p-0 text-right">
+
                             <form onSubmit={this.onFormSubmit}>
                                 <button type="submit"
-                                        className="btn btn-sm btn-outline-primary request-alert"
+                                        className="btn btn-sm btn-primary request-alert"
                                 >Request selected items
                                 </button>
                             </form>
 
-
-                        </div>
-                        <div className="col-1 p-0">
-                            <span className="text-color-primary font-weight-light">OR</span>
-                        </div>
-                        <div className="col-3 p-0 text-left">
-                            <NavLink className={"text-reset"} to={"/resources/add"}>
-                                <input type="button" className="btn btn-sm btn-outline-primary"
-                                       value="Add new resources" name="options" id="option3"/>
-                            </NavLink>
-                        </div>
                     </div>
                     <div className="row justify-content-center">
 
@@ -118,6 +114,23 @@ class OfficeList extends React.Component {
                         )}
                     </div>
                 </div>
+                <div className="container-fluid bg-yellow my-2" hidden={!this.state.show}>
+                    <hr/>
+                    <div className="row mb-3">
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-10 col-12">
+                            <span className={"h6"}> ADMIN PANEL</span>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-10 col-12">
+                            <NavLink className={"text-reset"} to={"/resources/add"}>
+                                <input type="button" className="btn btn-sm btn-outline-primary"
+                                       value="Add new resources" name="options" id="option3"/>
+                            </NavLink>
+                        </div>
+                    </div>
+                </div>
+                <Footer openAdmin={this.openAdmin}/>
             </div>
         );
     }

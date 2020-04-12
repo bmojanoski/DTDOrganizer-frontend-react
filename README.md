@@ -1,68 +1,30 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Име на проектот: Day to Day Organizer
 
-## Available Scripts
+<img src="https://i.ibb.co/k4cSLx5/logo-primary-01.png" alt="drawing" width="300"/>
 
-In the project directory, you can run:
+Име и презиме: Благојче Мојаноски
+Индекс: 161209
 
-### `npm start`
+> Овој проект е изработен како проектна задача по предметот 
+> **Веб програмирање** на Факултетот за Информатички Науки и Инженерство(ФИНКИ)
+## Опис
+Веб решението кое ќе e резултат на овој проект има за цел да го олесни и 
+организира на подобар начин целосното функционирање внатре во компанијата на дневна база. Се работи за Intranet веб апликација, која е респонсивна и може да се користи и од мобилни телефони. Идејата произлегува од мое искуство и искуство на мои колеги со кои ја добивме оваа идеја преку работа во реална компанија и чувството на недостаток од организација во поголемиот дел од компаниите на секојдневните (тривијални) задачи, обврски и цели. Поголемиот дел од организацијата е насочена кон подобра и поефикасна изработка на софтвер, додека оптимизација на „животниот стил“ во компанијата недостасува. Овој софтвер како крајна цел има да го подобри овој „животен стил“ односно да овозможи подобра комуникација во самата компанија помеѓу нејзините вработени на едно повисоко ниво од професионалното.
+## Упатство за стартување на проектот
+***Важно**: Најпрво мора да имате инсталирано [WebStorm](https://www.jetbrains.com/webstorm/) или друго [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment) за web development, исто така мора да имате инсталирано [Node.js и npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)*
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+*Пред да продолжите бидете сигурно дека проекот поставен на овој [линк](https://github.com/bmojanoski/DTDOrganizer-java) ви е веќе стартуван, тој е потребен за вчирување на сите податоци во вашата апликација.*
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+ 1. Сибнете ја апликацијата како .zip или [клонирајте](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) го проектот погоре
+ 2. Отворето го проектот локално во вашето IDE
+ 3. Во долниот дел во вашето IDE пишува Terminal, стиснете на тоа копче и во конзолата напишете: `npm install` па `npm start`
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+>  ##### `npm install` - оваа команда ги инсталира потребните зависности за проектот  
+> ##### `npm start` - оваа команда ќе го стартува проектот и автоматски ќе ви се отвори во пребарувач.
+## Функционалности
+1. **Организатор во вид на календар за конференциска сала, отсуство и
+настани/празници** – истиот има функционалности за приказ на настаните од аспект на месец, недела и листа на настани. 
+2. **Нарачка на ресури** – во овој дел имате можност за преглед и нарачка на соодветен ресурс, исто така доколку ги приклучите админ опциите, ќе можете да додавате и нови ресурси.
+3. **Библиотека за ресурси за едукација** – поглед со функционалности за користење на книги, курсеви или останати документи како ресурси, при што истиот овозможува информација за книгите и пристап до документите.
+4. **Организатор за оброци** – овозможува пристап до менија, избор на оброк и приказ на оброкот.
+> ***Напомена:*** Во наредниот период е планирано и додавање на страна за највување/регистрација, со тоа ќе се воведат и улоги.

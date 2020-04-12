@@ -132,7 +132,6 @@ class App extends Component {
     loadWorkMaterials = () => {
         DTDService.fetchWorkMaterials().then((response) => {
             this.setState({
-
                 wMaterialsList: response.data
             });
         });
@@ -148,7 +147,9 @@ class App extends Component {
     };
 
     addRequest = (request) => {
-        DTDService.addRequest(request);
+        DTDService.addRequest(request).then((response) => {
+
+        });
     };
     addResource = (resource) => {
         DTDService.addResource(resource).then((response) => {

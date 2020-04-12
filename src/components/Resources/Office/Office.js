@@ -16,10 +16,6 @@ const Office = (props) => {
                             <label>Description</label>
                             <div>{office.description}</div>
                         </div>
-                        <div className="info-section-office text-left">
-                            <label>Requests</label>
-                            <div className="text-right">{office.requests.length}</div>
-                        </div>
                     </div>
                 </div>
             </div>

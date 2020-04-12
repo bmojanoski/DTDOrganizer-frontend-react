@@ -247,6 +247,7 @@ a:hover {
         background: var(--b, var(--background));
         -webkit-transition: background .3s, border-color .3s, box-shadow .2s;
         transition: background .3s, border-color .3s, box-shadow .2s;
+
     }
     input[type='checkbox']:after,
     input[type='radio']:after {

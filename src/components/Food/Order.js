@@ -39,7 +39,7 @@ class Order extends Component {
 
     handleChangeFood(e, index) {
 
-        this.state.inputs.food[index] = e.target.value
+        this.state.inputs.food[index] = e.target.value;
 
         //set the changed state...
         this.setState({
