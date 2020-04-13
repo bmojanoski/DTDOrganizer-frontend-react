@@ -27,7 +27,7 @@ class BookDetails extends Component {
     fetchData(isbn) {
         DTDService.fetchBooksById({isbn}).then((response) => {
             const newBook = response.data;
-            if (this._isMounted = true) {
+            if (this._isMounted === true) {
                 this.setState((prevState) => {
                     const newBookRef = [...prevState.books, newBook];
                     return {

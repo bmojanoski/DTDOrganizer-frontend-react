@@ -1,6 +1,5 @@
 import React from 'react'
 import {NavLink, useHistory} from 'react-router-dom';
-import DTDService from "../../../repository/axiosConsultationsRepository";
 import Header from "../../Header/Header";
 
 const BookAdd = (props) => {
