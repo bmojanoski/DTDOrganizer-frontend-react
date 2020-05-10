@@ -121,7 +121,7 @@ class UtilityList extends React.Component {
                         </div>
                     </div>
                     <div className="row my-4">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-10 col-12">
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-10 col-12 mb-2">
                             <NavLink className={"text-reset"} to={"/resources/add"}>
                                 <input type="button" className="btn btn-sm btn-outline-primary"
                                        value="Add new resources" name="options" id="option3"/>

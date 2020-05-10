@@ -1,7 +1,7 @@
 body {
   height: 100%;
   margin: 0 0 7vh;
-  font-family: 'Titillium Web', sans-serif;
+  font-family: 'Titillium Web','Open Sans Light', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #fcfaf0;

@@ -5,6 +5,7 @@ import Order from "./Order";
 import TodayOrders from "./TodayOrders";
 import DTDService from "../../repository/axiosConsultationsRepository";
 import Footer from "../Footer/Footer";
+import Modal from "react-bootstrap/Modal";
 
 class Food extends Component {
     _isMounted = false;
@@ -14,7 +15,8 @@ class Food extends Component {
 
         this.state = {
             orderList: [],
-            show: false
+            show: false,
+            pricerangeState: ""
         }
     }
 
@@ -47,6 +49,41 @@ class Food extends Component {
         }
     };
 
+    handleCloseFoodModal = () => {
+        this.setState({
+            showFoodModal: false
+        });
+    };
+    handleShowFoodModal = () => {
+        this.setState({
+            showFoodModal: true
+        });
+    };
+    showModal = () => {
+        this.handleShowFoodModal();
+    };
+
+    onFormSubmit = (e) => {
+        e.preventDefault();
+
+
+        const newRest = {
+            name: e.target.name.value,
+            priceRange: this.state.pricerangeState,
+            image: e.target.imageURL.value,
+        }
+        debugger;
+        this.handleCloseFoodModal();
+        this.props.onNewRestaurantAdded(newRest);
+
+    };
+    handleInputChange = (e) => {
+        this.setState({
+            pricerangeState: e.target.value
+        });
+        debugger;
+    };
+
     render() {
         return (
             <div>
@@ -55,7 +92,7 @@ class Food extends Component {
                     <div className="row justify-content-between">
 
                         {this.props.restaurantList.map((restaurant) =>
-                            <div className="col-lg-3 col-md-6 col-sm-12 col-10 my-3 " key={restaurant.id}>
+                            <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 my-3 " key={restaurant.id}>
                                 <Restaurant
                                     key={restaurant.id}
                                     restaurant={restaurant}
@@ -67,22 +104,101 @@ class Food extends Component {
                 </div>
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-lg-6 col-md-12 col-sm-12 col-10 col-12">
+                        <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                             <Order restaurantList={this.props.restaurantList} onNewOrderAdded={this.loadOrders}/>
                         </div>
-                        <div className="col-lg-6 col-md-12 col-sm-12 col-10 col-12">
+                        <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                             <TodayOrders orderList={this.state.orderList}/>
                         </div>
                     </div>
                 </div>
-                <div className="container-fluid bg-yellow" hidden={!this.state.show}>
-                    <div className="row">
+
+                <div className="container-fluid  my-4" hidden={!this.state.show}>
+                    <hr/>
+                    <div className="row mb-3">
                         <div className="col-lg-12 col-md-12 col-sm-12 col-10 col-12">
-                            ADMIN PANEL
+                            <span className={"h6"}> ADMIN PANEL</span>
+                        </div>
+                    </div>
+                    <div className="row my-4">
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-10 col-12 mb-2">
+                            <button className="btn btn-sm btn-outline-primary" onClick={this.showModal}>Add restaurant</button>
                         </div>
                     </div>
                 </div>
                 <Footer openAdmin={this.openAdmin}/>
+
+
+                <Modal
+                    show={this.state.showFoodModal}
+                    onHide={this.handleCloseFoodModal}
+                    size={"md"}
+                >
+                    <Modal.Header>
+                        <Modal.Title id="example-modal-sizes-title-sm modal-title">
+                            Add new restaurant
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-12">
+                                    <form onSubmit={this.onFormSubmit} className={"row"}>
+                                        <div className="col-12">
+
+                                            <div className="form-group">
+                                                <label htmlFor="name">Restaurant Name: </label>
+                                                <input type="text"
+                                                       placeholder={"Set restaurant name..."}
+                                                       className="form-control form-control-sm title"
+                                                       id="name"/>
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="imageURL">Menu image URL: </label>
+                                                <input type="text"
+                                                       placeholder={"Set Menu image URL..."}
+                                                       className="form-control form-control-sm title"
+                                                       id="imageURL"/>
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="pricerange">Color:</label>
+                                                <select id="pricerange"
+                                                        name="pricerange"
+                                                        onChange={this.handleInputChange}
+                                                        className="form-control form-control-sm">
+                                                    <option defaultValue={"Choose price range"}>Choose price range</option>
+                                                    <option value="Cheap">Cheap</option>
+                                                    <option value="Medium">Medium</option>
+                                                    <option value="Expensive">Expensive</option>
+                                                </select>
+                                            </div>
+                                            <div className="row form-group">
+                                                <div className="col-md-12 text-right  p-0">
+
+                                                    <button type="submit"
+                                                            className="btn btn-sm btn-primary mt-2 mr-3"
+                                                            title="Save"
+                                                    ><i className="fa fa-fw fa-save"/> Save
+                                                    </button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div className="row text-right">
+                                <div className="col-12">
+                                    <button onClick={this.handleCloseFoodModal}
+                                            className="btn btn-sm btn-danger ml-2 mt-2"
+                                            title="Cancel">
+                                        <i className="fa fa-fw fa-times"/> Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </Modal.Body>
+                </Modal>
             </div>
         )
     }

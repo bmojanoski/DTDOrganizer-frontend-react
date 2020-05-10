@@ -17,6 +17,7 @@ import ResourcesAdd from "../Resources/ResourcesAdd";
 import Calendar from "../Calendar/Calendar";
 import Home from "../Home/Home";
 import Food from "../Food/Food";
+import About from "../About/About";
 
 class App extends Component {
     _isMounted = false;
@@ -175,6 +176,17 @@ class App extends Component {
 
         });
     };
+    addRestaurant = (restaurant) => {
+        DTDService.addRestaurant(restaurant).then((response) => {
+            const newRest = response.data;
+            this.setState((prevState) => {
+                const newRestRef = [...prevState.restaurantList, newRest];
+                return {
+                    "restaurantList": newRestRef
+                }
+            })
+        });
+    };
     addResource = (resource) => {
         DTDService.addResource(resource).then((response) => {
             const newResource = response.data;
@@ -284,12 +296,17 @@ class App extends Component {
 
                 {/*FOOD*/}
                 <Route path={"/food"} exact render={() =>
-                    <Food {...restaurantState}/>}>
+                    <Food {...restaurantState} onNewRestaurantAdded={this.addRestaurant} />}>
                 </Route>
 
                 {/*HOME PAGE*/}
                 <Route path={"/"} exact render={() =>
                     <Home/>}>
+                </Route>
+
+                {/*ABOUT PAGE*/}
+                <Route path={"/about"} exact render={() =>
+                    <About/>}>
                 </Route>
 
                 <Redirect to="/"/>

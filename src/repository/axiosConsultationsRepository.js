@@ -31,6 +31,13 @@ const DTDService = {
             }
         });
     },
+    addRestaurant: (restaurant) => {
+        return axios.post("/api/v1/restaurants",restaurant,{
+            headers:{
+                'Content-Type' : 'application/json'
+            }
+        });
+    },
     postOrder: (order) => {
         return axios.post("/api/v1/orders", order ,{
             headers:{

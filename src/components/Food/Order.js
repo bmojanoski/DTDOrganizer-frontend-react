@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import DTDService from "../../repository/axiosConsultationsRepository";
-import Modal from "react-bootstrap/Modal";
 import {toast} from 'react-toastify'
 
 toast.configure();
@@ -17,7 +16,7 @@ class Order extends Component {
                 food: [""],
                 price: [""]
             },
-            showFoodModal: false,
+
             restaurantList: this.props.restaurantList,
         };
     }
@@ -114,7 +113,7 @@ class Order extends Component {
                     name: this.state.inputs.food[i],
                     price: this.state.inputs.price[i]
                 });
-            }else{
+            } else {
                 this.notifyWarning();
                 return 0;
             }
@@ -156,24 +155,9 @@ class Order extends Component {
 
     }
 
-
-    handleCloseFoodModal = () => {
-        this.setState({
-            showFoodModal: false
-        });
-    };
-    handleShowFoodModal = () => {
-        this.setState({
-            showFoodModal: true
-        });
-    };
-    showModal = () => {
-        this.handleShowFoodModal();
-    };
-
     render() {
-        return (<>
-
+        return (
+            <>
                 <div className="card mb-4">
                     <div className="card-header bg-header">
                         <span className="h5 font-weight-bolder text-white">Make an order</span>
@@ -207,7 +191,8 @@ class Order extends Component {
                                 <div className="row justify-content-start ">
                                     <div className="col-12">
                                         <div className="form-row">
-                                            <div className="form-group col-4  text-left">
+                                            <div
+                                                className="form-group col-6 col-sm-6 col-md-5 col-lg-5 col-xl-5  text-left">
                                                 <label htmlFor="inputFood">*Food name:</label>
                                                 {
                                                     this.state.inputs.food.map((food, index) => {
@@ -224,7 +209,8 @@ class Order extends Component {
                                                     })
                                                 }
                                             </div>
-                                            <div className="form-group col-3  text-left">
+                                            <div
+                                                className="form-group col-6 col-sm-6 col-md-5 col-lg-5 col-xl-5 text-left">
                                                 <label htmlFor="inputPrice">*Price</label>
                                                 {
                                                     this.state.inputs.price.map((price, index) => {
@@ -253,10 +239,11 @@ class Order extends Component {
                                                 }
 
                                             </div>
-                                            <
-                                                div
-                                                className="form-group col-5  text-left">
-                                                < label
+                                        </div>
+                                        <div className="form-row">
+                                            <div
+                                                className="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6  text-left">
+                                                <label
                                                     htmlFor="inputDescription">Description:</label>
                                                 <textarea className="form-control"
                                                           rows={1}
@@ -267,7 +254,7 @@ class Order extends Component {
                                             </div>
                                         </div>
                                         <div className="form-row">
-                                            <div className="form-group col-4  text-left">
+                                            <div className="form-group col-12  text-left">
                                                 <button
                                                     className="btn btn-primary"
                                                     onClick={(e) => this.addRow(e)}
@@ -300,62 +287,7 @@ class Order extends Component {
                     </ul>
                 </div>
 
-                <Modal
-                    show={this.state.showFoodModal}
-                    onHide={this.handleCloseFoodModal}
-                    size={"md"}
-                >
-                    <Modal.Header>
-                        <Modal.Title id="example-modal-sizes-title-sm modal-title">
-                            Add new food for specific restaurant
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-12">
-                                    <form onSubmit={this.onFormSubmitAddNewEvent} className={"row"}>
-                                        <div className="col-12">
-                                            <div className="form-group">
-                                                <label htmlFor="title">Restaurant: </label>
-                                                <select value={this.state.selectedRestaurantForFood}
-                                                        onChange={(e) => this.setState({selectedRestaurantForFood: e.target.value})}
-                                                        className="form-control"
-                                                >
-                                                    <option defaultValue="">Choose restaurant to add food</option>
-                                                    {this.state.restaurantList.map((restaurant) => <option
-                                                        key={restaurant.id}
-                                                        value={restaurant.name}>{restaurant.name}</option>)}
-                                                </select>
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="description">Food name: </label>
-                                                <input type="text"
-                                                       className="form-control form-control-sm food_name"
-                                                       id="food_name"/>
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="color">Food price</label>
-                                                <input type="text"
-                                                       className="form-control form-control-sm food_price"
-                                                       id="food_price"/>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div className="row text-right">
-                                <div className="col-12">
-                                    <button onClick={this.handleCloseFoodModal}
-                                            className="btn btn-sm btn-danger ml-2 mt-2"
-                                            title="Cancel">
-                                        <i className="fa fa-fw fa-times"/> Cancel
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </Modal.Body>
-                </Modal>
+
             </>
         )
     }

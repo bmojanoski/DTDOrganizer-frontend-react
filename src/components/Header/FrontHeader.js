@@ -35,8 +35,12 @@ const FrontHeader = () => {
                                          to={"/library/book"}>Library</NavLink>
                             </li>
                             <li className="nav-item ">
-                                <NavLink className="nav-link text-prim font-weight-bold" activeClassName="active"
+                                <NavLink className="nav-link mr-3 text-prim font-weight-bold" activeClassName="active"
                                          to={"/food"}>Food</NavLink>
+                            </li>
+                            <li className="nav-item ">
+                                <NavLink className="nav-link text-prim font-weight-bold" activeClassName="active"
+                                         to={"/about"}>About</NavLink>
                             </li>
 
                         </ul>

@@ -32,6 +32,9 @@ import { NavLink,Link  } from "react-router-dom";
                 <li className="nav-item ">
                   <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/food"}>Food</NavLink>
                 </li>
+                <li className="nav-item ">
+                  <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/about"}>About</NavLink>
+                </li>
 
               </ul>
             </div>

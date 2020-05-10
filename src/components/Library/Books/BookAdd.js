@@ -10,8 +10,6 @@ const BookAdd = (props) => {
     const onFormSubmit = (e) => {
         e.preventDefault();
 
-        e.preventDefault();
-
         if(e.target.isbn.value.length >= 10 || e.target.isbn.value.length <= 13){
             props.onNewBookAdded(e.target.isbn.value,e.target.qty.value);
             history.push("/library/book");
