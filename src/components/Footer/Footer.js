@@ -19,21 +19,22 @@ class Footer extends Component {
 
     render() {
         return (
-            <footer className="footer mt-auto py-1 bg-primary">
-                <div className="container">
-                    <div className="row align-items-center">
-                        <div className="col-6 text-small text-left text-white">
-                            © 2020 Day to day organizer All Rights Reserved
-                        </div>
-                        <div className="col-6 text-right">
-                            <button type={"button"} className={"btn btn-primary text-white"}
-                                    onClick={(e) => this.handleClicks(e)}>Click 3 times to open/close admin panel
-                            </button>
-                        </div>
 
+            <footer className="footer  py-1 bg-primary">
+                <div className="container-fluid">
+                    <div className="row justify-content-center">
+                        <span className="col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6 text-small  text-white">
+                            ©2020 Day to day organizer
+                        </span>
+
+                        <span className="text-white col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6 text-small  "
+                              onClick={(e) => this.handleClicks(e)}>
+                                Click 3 times to open/close admin panel
+                        </span>
                     </div>
                 </div>
             </footer>
+
         )
     }
 }

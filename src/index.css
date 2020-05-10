@@ -1,12 +1,24 @@
 body {
-  margin: 0;
+  height: 100%;
+  margin: 0 0 7vh;
   font-family: 'Titillium Web', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #fcfaf0;
 
+  /*STOP COPYING TEXT*/
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
+html {
+  position: relative;
+  min-height: 100%;
 
+}
 .heading {
   font-weight: 700;
 }
@@ -17,3 +29,4 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+

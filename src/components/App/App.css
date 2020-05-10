@@ -201,3 +201,10 @@ label.btn.btn-primary.active {
     }
 }
 
+.footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 6vh;
+    width: 100%;
+}

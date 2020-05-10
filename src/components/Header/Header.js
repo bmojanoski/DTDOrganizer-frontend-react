@@ -5,7 +5,6 @@ import { NavLink,Link  } from "react-router-dom";
   class Header extends Component {
   render() {
     return (
-      <header>
         <nav className="navbar navbar-expand-lg navbar-dark bg-header  navbar-fixed sticky-top shadow">
           <div className="container">
             <Link className="navbar-brand p-0 m-0"  to={"/"}>
@@ -42,7 +41,6 @@ import { NavLink,Link  } from "react-router-dom";
 
           </div>
         </nav>
-      </header>
     );
   }
 }
