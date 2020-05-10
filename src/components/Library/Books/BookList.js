@@ -27,7 +27,7 @@ class BookList extends React.Component {
                 <div className="container">
                     <div className="row justify-content-center">
                         {this.props.bookList.map((book) =>
-                            <div className="col-lg-4 col-md-6 col-sm-6 col-10 mb-3 " key={book.isbn}>
+                            <div className="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-3 " key={book.isbn}>
                                 <Book
                                     key={book.isbn}
                                     book={book}

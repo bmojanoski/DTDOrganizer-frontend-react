@@ -4,14 +4,7 @@ import FrontHeader from "../Header/FrontHeader";
 class Home extends Component {
 
     styles = {
-        background:`url(https://i.ibb.co/zJ2fjTz/img-01.png) no-repeat`,
-        float: "left",
-        height: "100vh",
-        width: "100%",
-        backgroundPosition: " center center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "fixed",
-        backgroundSize: "cover",
+
     };
 
     render() {

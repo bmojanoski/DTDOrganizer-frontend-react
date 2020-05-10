@@ -14,7 +14,7 @@ const CourseList = (props) => {
                 <div className="row justify-content-center">
 
                     {props.courseList.map((course) =>
-                        <div className="col-lg-3 col-md-6 col-sm-6 col-10 mb-3 " key={course.id}>
+                        <div className="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-3 " key={course.id}>
                             <Course
                                 key={course.id}
                                 course={course}

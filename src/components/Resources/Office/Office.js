@@ -1,5 +1,5 @@
 import React from 'react';
-import '../officeCss.css'
+import '../workmaterials.css'
 const Office = (props) => {
     const { office } = props;
 

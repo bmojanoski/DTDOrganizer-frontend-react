@@ -100,7 +100,7 @@ class MaterialList extends React.Component {
                     <div className="row justify-content-center">
 
                         {this.props.wMaterialsList.map((material) =>
-                            <div className="col-lg-4 col-md-6 col-sm-6 col-10 mb-3 " key={material.id}>
+                            <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 mb-3 " key={material.id}>
 
                                 <div className="mt-3 mb-2">
                                     <Checkbox name={material.name}

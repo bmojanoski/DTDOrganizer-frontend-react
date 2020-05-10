@@ -14,7 +14,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 
 import $ from 'jquery'
 import '../App/App.css'
-import {Tooltip} from "bootstrap"
+
 import DTDService from "../../repository/axiosConsultationsRepository"
 
 
@@ -48,7 +48,7 @@ export default class Calendar extends React.Component {
             calendarEventType: ""
         };
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleInputCheckboxChange= this.handleInputCheckboxChange.bind(this)
+        this.handleInputCheckboxChange = this.handleInputCheckboxChange.bind(this)
     }
 
     componentWillUnmount() {
@@ -174,8 +174,9 @@ export default class Calendar extends React.Component {
             [name]: value
         });
     }
+
     handleInputCheckboxChange() {
-        debugger;
+
         this.setState({
             allDay: !this.state.allDay
         });
@@ -204,7 +205,7 @@ export default class Calendar extends React.Component {
                                         <div className="row">
                                             <div className="col-12">
                                                 <form onSubmit={this.onFormSubmit.bind(this)} className={"row"}>
-                                                    <div className="col-6">
+                                                    <div className="col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6 ">
                                                         <div className="form-group">
                                                             <label htmlFor="title">Title: </label>
                                                             <input type="text"
@@ -266,7 +267,7 @@ export default class Calendar extends React.Component {
                                                                    onChange={this.handleInputChange}/>
                                                         </div>
                                                     </div>
-                                                    <div className="col-6">
+                                                    <div className="col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6 ">
                                                         <div className="form-group">
                                                             <label htmlFor="color">Color:</label>
                                                             <select value={this.state.color}
@@ -299,7 +300,9 @@ export default class Calendar extends React.Component {
                                                                     onChange={this.handleInputChange}
                                                                     value={this.state.calendarEventType}
                                                                     className="form-control form-control-sm calendarEventType">
-                                                                <option defaultValue={"Choose event type"}>Choose event type</option>
+                                                                <option defaultValue={"Choose event type"}>Choose event
+                                                                    type
+                                                                </option>
                                                                 <option value="Meeting">Meeting</option>
                                                                 <option value="Birthday">Birthday</option>
                                                                 <option value="Room">Room</option>
@@ -314,9 +317,10 @@ export default class Calendar extends React.Component {
                                                                     className="custom-control-input"
                                                                     id="allDay"
                                                                     checked={this.state.allDay}
-                                                                    onChange={this.handleInputCheckboxChange} />
+                                                                    onChange={this.handleInputCheckboxChange}/>
 
-                                                                <label className="custom-control-label" htmlFor="allDay">
+                                                                <label className="custom-control-label"
+                                                                       htmlFor="allDay">
                                                                     All Day
                                                                 </label>
                                                             </div>
@@ -373,7 +377,7 @@ export default class Calendar extends React.Component {
                                         <div className="row">
                                             <div className="col-12">
                                                 <form onSubmit={this.onFormSubmitAddNewEvent} className={"row"}>
-                                                    <div className="col-6">
+                                                    <div className="col-sm-12 col-12 col-md-6 col-lg-6 col-xl-6 ">
                                                         <div className="form-group">
                                                             <label htmlFor="title">Title: </label>
                                                             <input type="text" className="id" id="id" hidden/>
@@ -419,7 +423,7 @@ export default class Calendar extends React.Component {
                                                                    id="description"/>
                                                         </div>
                                                     </div>
-                                                    <div className="col-6">
+                                                    <div className="col-sm-12 col-12 col-md-6 col-lg-6 col-xl-6 ">
                                                         <div className="form-group">
                                                             <label htmlFor="color">Color:</label>
                                                             <select id="color"
@@ -449,7 +453,9 @@ export default class Calendar extends React.Component {
                                                                     name="calendarEventType"
                                                                     onChange={this.handleInputChange}
                                                                     className="form-control form-control-sm calendarEventType">
-                                                                <option defaultValue={"Choose event type"}>Choose event type</option>
+                                                                <option defaultValue={"Choose event type"}>Choose event
+                                                                    type
+                                                                </option>
                                                                 <option value="Meeting">Meeting</option>
                                                                 <option value="Birthday">Birthday</option>
                                                                 <option value="Room">Room</option>
@@ -464,9 +470,10 @@ export default class Calendar extends React.Component {
                                                                     className="custom-control-input"
                                                                     id="allDay"
                                                                     checked={this.state.allDay}
-                                                                    onChange={this.handleInputCheckboxChange} />
+                                                                    onChange={this.handleInputCheckboxChange}/>
 
-                                                                <label className="custom-control-label" htmlFor="allDay">
+                                                                <label className="custom-control-label"
+                                                                       htmlFor="allDay">
                                                                     All Day
                                                                 </label>
                                                             </div>
@@ -528,7 +535,7 @@ export default class Calendar extends React.Component {
 
                                 events={this.state.events}
 
-                                eventRender={this.eventRender}
+
                                 eventTextColor={"White"}
                                 select={this.handleDateClick}
                                 eventResize={this.eventResize}
@@ -564,7 +571,7 @@ export default class Calendar extends React.Component {
 
     //When i click on specific event bind the modal with this data
     eventClicked = arg => {
-        this.state.events.map(
+        this.state.events.forEach(
             (specificEvent) => {
                 if (specificEvent.id === parseInt(arg.event.id)) {
                     this.handleShowEditModal();
@@ -615,7 +622,7 @@ export default class Calendar extends React.Component {
             color: arg.target.color.value
 
         };
-        debugger;
+
         this.setState(prevState => ({
             events: prevState.events.map(
                 specificEvent => specificEvent.id === parseInt(event.id) ? {
@@ -676,15 +683,4 @@ export default class Calendar extends React.Component {
         this.updateEvent(event);
     };
 
-    //Showing description on hover
-    eventRender(info) {
-
-        var tooltip = new Tooltip(info.el, {
-            title: info.event.extendedProps.description,
-            placement: 'top',
-            trigger: 'hover',
-            container: 'body'
-        });
-
-    }
 }

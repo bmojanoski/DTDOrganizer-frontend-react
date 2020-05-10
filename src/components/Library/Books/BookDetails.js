@@ -71,9 +71,9 @@ class BookDetails extends Component {
                                                     className="fa fa-calendar"/> {book.publishedDate}</span>
                                             </div>
 
-                                            <button className="btn rounded mt-3 btn-primary font-weight-bold"
-                                            > Rent this book!
-                                            </button>
+                                            {/*<button className="btn rounded mt-3 btn-primary font-weight-bold"*/}
+                                            {/*> Rent this book!*/}
+                                            {/*</button>*/}
                                         </div>
                                     </div>
                                     <hr/>
