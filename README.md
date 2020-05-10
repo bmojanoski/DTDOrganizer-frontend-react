@@ -1,6 +1,9 @@
 ## Име на проектот: Day to Day Organizer[frontend]
-
 <img src="https://i.ibb.co/k4cSLx5/logo-primary-01.png" alt="drawing" width="300"/>
+
+
+## DEMO AVAILABLE AT: https://dtdorganizer.herokuapp.com/
+### Please wait couple of seconds at the first request, Heroku needs couple of seconds to launch app. Thank you!
 
 Име и презиме: Благојче Мојаноски
 Индекс: 161209
