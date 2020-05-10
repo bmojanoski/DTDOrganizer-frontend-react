@@ -20,7 +20,6 @@ import DTDService from "../../repository/axiosConsultationsRepository"
 
 import "react-datepicker/dist/react-datepicker.css";
 import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
 
 export default class Calendar extends React.Component {
     _isMounted = false;
