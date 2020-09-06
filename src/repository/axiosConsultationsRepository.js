@@ -1,21 +1,26 @@
 import axios from '../custom-axios/axios'
+import authHeader from "../services/auth-header";
+
+
+
+const API_URL = 'http://localhost:8080/api/v1/';
 
 const DTDService = {
 
     // FOOD
     fetchRestaurants: ()=> {
-        return axios.get("/api/v1/restaurants");
+        return axios.get(API_URL + 'restaurants');
     },
     // ORDERS
     fetchOrders: ()=> {
-        return axios.get("/api/v1/orders");
+        return axios.get(API_URL + 'orders' );
     },
     // BOOKS
     fetchBooks: ()=> {
-        return axios.get("/api/v1/books");
+        return axios.get(API_URL + 'books', { headers: authHeader() });
     },
     fetchBooksById: (isbn)=> {
-        return axios.get(`/api/v1/books/`+isbn.isbn);
+        return axios.get(API_URL + `books/`+ isbn.isbn, { headers: authHeader() });
     },
     addBook: (book) => {
         return axios.post("/api/v1/books",book,{
@@ -48,7 +53,7 @@ const DTDService = {
 
     // COURSES
     fetchCourses: ()=> {
-        return axios.get("/api/v1/courses");
+        return axios.get(API_URL + 'courses', { headers: authHeader() });
     },
     addCourse: (course) => {
 
@@ -61,7 +66,7 @@ const DTDService = {
 
     // DOCUMENTS
     fetchDocuments: ()=> {
-        return axios.get("/api/v1/documents");
+        return axios.get(API_URL + 'documents', { headers: authHeader() });
     },
     addDocument: (document) => {
 
@@ -83,7 +88,7 @@ const DTDService = {
 
     // Office
     fetchOffice: ()=> {
-        return axios.get("/api/v1/resources/office");
+        return axios.get(API_URL + 'resources/office', { headers: authHeader() });
     },
     addResource: (resource) => {
         return axios.post("/api/v1/resources",resource,{
@@ -95,17 +100,17 @@ const DTDService = {
 
     // WorkMaterials
     fetchWorkMaterials: ()=> {
-        return axios.get("/api/v1/resources/materials");
+        return axios.get(API_URL+ 'resources/materials', { headers: authHeader() });
     },
 
     // Utilities
     fetchUtilities: ()=> {
-        return axios.get("/api/v1/resources/utilities");
+        return axios.get(API_URL + 'resources/utilities', { headers: authHeader() });
     },
 
     //Events
     fetchEvents: () => {
-        return axios.get("/api/v1/calendar");
+        return axios.get(API_URL + 'calendar', { headers: authHeader() });
     },
 
     updateEvent : (event) => {

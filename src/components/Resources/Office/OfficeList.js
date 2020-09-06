@@ -9,6 +9,7 @@ import {NavLink} from "react-router-dom";
 import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Footer from "../../Footer/Footer";
+import AuthService from "../../../services/auth.service";
 
 toast.configure();
 
@@ -20,9 +21,19 @@ class OfficeList extends React.Component {
             checkedItems: new Map(),
             checkedIds: [],
             show: false,
-            btnAddDisable: true
+            btnAddDisable: true,
+            currentUser: undefined
         };
         this.handleChange = this.handleChange.bind(this);
+    }
+    componentDidMount() {
+        const user = AuthService.getCurrentUser();
+        if (user) {
+            this.setState({
+                currentUser: user,
+            });
+
+        }
     }
 
     handleChange(e) {
@@ -82,6 +93,7 @@ class OfficeList extends React.Component {
 
 
     render() {
+        const currentUser = this.state.currentUser;
         return (
             <div>
                 <ResourcesMenu office={"active"}/>
@@ -133,7 +145,10 @@ class OfficeList extends React.Component {
                         </div>
                     </div>
                 </div>
-                <Footer openAdmin={this.openAdmin}/>
+                {currentUser &&
+                ((currentUser.roles[0]!=="ROLE_USER")  &&
+                    <Footer openAdmin={this.openAdmin}/>)
+                }
             </div>
         );
     }

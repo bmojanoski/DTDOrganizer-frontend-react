@@ -6,6 +6,7 @@ import TodayOrders from "./TodayOrders";
 import DTDService from "../../repository/axiosConsultationsRepository";
 import Footer from "../Footer/Footer";
 import Modal from "react-bootstrap/Modal";
+import AuthService from "../../services/auth.service";
 
 class Food extends Component {
     _isMounted = false;
@@ -16,13 +17,21 @@ class Food extends Component {
         this.state = {
             orderList: [],
             show: false,
-            pricerangeState: ""
+            pricerangeState: "",
+            currentUser: undefined
         }
     }
 
     componentDidMount() {
         this._isMounted = true;
         this.loadOrders();
+        const user = AuthService.getCurrentUser();
+        if (user) {
+            this.setState({
+                currentUser: user,
+            });
+
+        }
     }
 
     componentWillUnmount() {
@@ -72,7 +81,7 @@ class Food extends Component {
             priceRange: this.state.pricerangeState,
             image: e.target.imageURL.value,
         }
-        debugger;
+
         this.handleCloseFoodModal();
         this.props.onNewRestaurantAdded(newRest);
 
@@ -81,10 +90,11 @@ class Food extends Component {
         this.setState({
             pricerangeState: e.target.value
         });
-        debugger;
+
     };
 
     render() {
+        const currentUser = this.state.currentUser;
         return (
             <div>
                 <Header/>
@@ -126,7 +136,10 @@ class Food extends Component {
                         </div>
                     </div>
                 </div>
-                <Footer openAdmin={this.openAdmin}/>
+                {currentUser &&
+                ((currentUser.roles[0]!=="ROLE_USER")  &&
+                    <Footer openAdmin={this.openAdmin}/>)
+                }
 
 
                 <Modal

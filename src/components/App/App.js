@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom'
 
 // Components
 import DTDService from '../../repository/axiosConsultationsRepository';
@@ -18,12 +18,15 @@ import Calendar from "../Calendar/Calendar";
 import Home from "../Home/Home";
 import Food from "../Food/Food";
 import About from "../About/About";
+import Register from "../Register/Register";
+import Login from "../Login/Login";
 
 class App extends Component {
     _isMounted = false;
 
     constructor(props) {
         super(props);
+
         this.state = {
             bookList: [],
             courseList: [],
@@ -42,6 +45,7 @@ class App extends Component {
 
     componentDidMount() {
         this._isMounted = true;
+
         this.loadBooks();
         this.loadCourses();
         this.loadDocuments();
@@ -68,14 +72,14 @@ class App extends Component {
             });
         });
     };
-    addBook = (isbn,qty) => {
+    addBook = (isbn, qty) => {
         fetch('https://www.googleapis.com/books/v1/volumes?q=isbn:' + isbn + '&key=AIzaSyARYJrBPVJ9B77JveSDkwPI5IvWUGVHe1M')
             .then((response) => {
                 return response.json();
             })
             .then((data) => {
                 const authors = []
-                data.items[0].volumeInfo.authors.forEach(x=> authors.push(x))
+                data.items[0].volumeInfo.authors.forEach(x => authors.push(x))
                 const newBook = {
                     "isbn": data.items[0].volumeInfo.industryIdentifiers[0].identifier,
                     "title": data.items[0].volumeInfo.title,
@@ -91,7 +95,7 @@ class App extends Component {
 
                 DTDService.addBook(newBook).then((response) => {
                         const newBookk = response.data;
-                        debugger;
+
                         this.setState((prevState) => {
                             const newBookRef = [...prevState.bookList, newBookk];
                             return {
@@ -237,80 +241,90 @@ class App extends Component {
 
         const routing = (
             <Router>
-                {/*CALENDAR*/}
-                <Route path={"/calendar"} exact render={() =>
-                    <Calendar events={this.state.eventsList}/>}>
-                </Route>
+                <Switch>
+                    {/*CALENDAR*/}
+                    <Route path={"/calendar"} exact render={() =>
+                        <Calendar events={this.state.eventsList}/>}>
+                    </Route>
 
-                {/*RESOURCES*/}
-                <Route path={"/resources/"} exact render={() =>
-                    <OfficeList {...officeState} onNewRequest={this.addRequest}/>}>
-                </Route>
-                <Route path={"/resources/add"} exact render={() =>
-                    <ResourcesAdd onNewResourcesAdded={this.addResource}/>}>
-                </Route>
-                {/*OFFICE*/}
-                <Route path={"/resources/office"} exact render={() =>
-                    <OfficeList {...officeState} onNewRequest={this.addRequest}/>}>
-                </Route>
-                {/*WorkMaterials*/}
-                <Route path={"/resources/materials"} exact render={() =>
-                    <MaterialList {...materialState} onNewRequest={this.addRequest}/>}>
-                </Route>
-                {/*Utilities*/}
-                <Route path={"/resources/utilities"} exact render={() =>
-                    <UtilityList {...utilityState} onNewRequest={this.addRequest}/>}>
-                </Route>
+                    {/*RESOURCES*/}
+                    <Route path={"/resources/"} exact render={() =>
+                        <OfficeList {...officeState} onNewRequest={this.addRequest}/>}>
+                    </Route>
+                    <Route path={"/resources/add"} exact render={() =>
+                        <ResourcesAdd onNewResourcesAdded={this.addResource}/>}>
+                    </Route>
+                    {/*OFFICE*/}
+                    <Route path={"/resources/office"} exact render={() =>
+                        <OfficeList {...officeState} onNewRequest={this.addRequest}/>}>
+                    </Route>
+                    {/*WorkMaterials*/}
+                    <Route path={"/resources/materials"} exact render={() =>
+                        <MaterialList {...materialState} onNewRequest={this.addRequest}/>}>
+                    </Route>
+                    {/*Utilities*/}
+                    <Route path={"/resources/utilities"} exact render={() =>
+                        <UtilityList {...utilityState} onNewRequest={this.addRequest}/>}>
+                    </Route>
 
 
-                {/*LIBRARY*/}
-                <Route path={"/library/"} exact render={() =>
-                    <BookList {...state} />}>
-                </Route>
+                    {/*LIBRARY*/}
+                    <Route path={"/library/"} exact render={() =>
+                        <BookList {...state} />}>
+                    </Route>
 
-                {/*BOOKS*/}
-                <Route path={"/library/book"} exact render={() =>
-                    <BookList {...state} />}>
-                </Route>
-                <Route path={"/library/book/:isbn"} component={BookDetails}/>
+                    {/*BOOKS*/}
+                    <Route path={"/library/book"} exact render={() =>
+                        <BookList {...state} />}>
+                    </Route>
+                    <Route path={"/library/book/:isbn"} component={BookDetails}/>
 
-                <Route path={"/library/add/book"} exact render={() =>
-                    <BookAdd onNewBookAdded={this.addBook}/>}>
-                </Route>
+                    <Route path={"/library/add/book"} exact render={() =>
+                        <BookAdd onNewBookAdded={this.addBook}/>}>
+                    </Route>
 
-                {/*COURSES*/}
-                <Route path={"/library/courses"} exact render={() =>
-                    <CourseList {...coursesState} />}>
-                </Route>
-                <Route path={"/library/add/courses"} exact render={() =>
-                    <CourseAdd onNewCourseAdded={this.addCourse}/>}>
-                </Route>
+                    {/*COURSES*/}
+                    <Route path={"/library/courses"} exact render={() =>
+                        <CourseList {...coursesState} />}>
+                    </Route>
+                    <Route path={"/library/add/courses"} exact render={() =>
+                        <CourseAdd onNewCourseAdded={this.addCourse}/>}>
+                    </Route>
 
-                {/*DOCUMENTS*/}
-                <Route path={"/library/documents"} exact render={() =>
-                    <DocumentList {...documentsState}/>}>
-                </Route>
-                <Route path={"/library/add/documents"} exact render={() =>
-                    <DocumentAdd onNewDocumentAdded={this.addDocument}/>}>
-                </Route>
+                    {/*DOCUMENTS*/}
+                    <Route path={"/library/documents"} exact render={() =>
+                        <DocumentList {...documentsState}/>}>
+                    </Route>
+                    <Route path={"/library/add/documents"} exact render={() =>
+                        <DocumentAdd onNewDocumentAdded={this.addDocument}/>}>
+                    </Route>
 
-                {/*FOOD*/}
-                <Route path={"/food"} exact render={() =>
-                    <Food {...restaurantState} onNewRestaurantAdded={this.addRestaurant} />}>
-                </Route>
+                    {/*FOOD*/}
+                    <Route path={"/food"} exact render={() =>
+                        <Food {...restaurantState} onNewRestaurantAdded={this.addRestaurant}/>}>
+                    </Route>
 
-                {/*HOME PAGE*/}
-                <Route path={"/"} exact render={() =>
-                    <Home/>}>
-                </Route>
+                    {/*HOME PAGE*/}
+                    <Route path={"/"} exact render={() =>
+                        <Home/>}>
+                    </Route>
 
-                {/*ABOUT PAGE*/}
-                <Route path={"/about"} exact render={() =>
-                    <About/>}>
-                </Route>
+                    {/*ABOUT PAGE*/}
+                    <Route path={"/about"} exact render={() =>
+                        <About/>}>
+                    </Route>
 
-                <Redirect to="/"/>
+                    {/*<Route path={"/login"} exact render={(props) =>*/}
+                    {/*    <Login {...this.props} />}>*/}
+                    {/*</Route>*/}
+                    <Route exact path="/login" component={Login}/>
 
+                    <Route path={"/register"} exact render={() =>
+                        <Register/>}>
+                    </Route>
+
+                    <Redirect to="/"/>
+                </Switch>
             </Router>
         );
         return (

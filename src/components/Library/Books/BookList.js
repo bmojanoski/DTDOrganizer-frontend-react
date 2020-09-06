@@ -4,6 +4,7 @@ import Book from './Book';
 import LibraryMenu from "../Menu/Menu";
 import {NavLink} from "react-router-dom";
 import Footer from "../../Footer/Footer";
+import AuthService from "../../../services/auth.service";
 
 
 class BookList extends React.Component {
@@ -11,7 +12,18 @@ class BookList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: false
+            show: false,
+            currentUser: undefined
+        }
+    }
+
+    componentDidMount() {
+        const user = AuthService.getCurrentUser();
+        if (user) {
+            this.setState({
+                currentUser: user,
+            });
+
         }
     }
 
@@ -19,6 +31,7 @@ class BookList extends React.Component {
         this.setState({show: !this.state.show})
     };
     render() {
+        const currentUser = this.state.currentUser;
         return (
             <div>
 
@@ -52,7 +65,10 @@ class BookList extends React.Component {
                         </div>
                     </div>
                 </div>
-                <Footer openAdmin={this.openAdmin}/>
+                {currentUser &&
+                ((currentUser.roles[0]!=="ROLE_USER")  &&
+                <Footer openAdmin={this.openAdmin}/>)
+                }
             </div>
         );
     }

@@ -21,6 +21,9 @@ import { NavLink,Link  } from "react-router-dom";
 
               <ul className="navbar-nav mt-2 mt-lg-0" >
                 <li className="nav-item">
+                  <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/home"} >Home</NavLink>
+                </li>
+                <li className="nav-item">
                   <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/calendar"} >Calendar</NavLink>
                 </li>
                 <li className="nav-item">

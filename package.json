@@ -16,10 +16,12 @@
     "axios": "^0.19.0",
     "bootstrap": "^4.4.1",
     "font-awesome": "^4.7.0",
+    "ityped": "^1.0.3",
     "jquery": "^3.4.1",
     "moment": "^2.24.0",
     "popper.js": "^1.16.0",
     "prop-types": "latest",
+    "qs": "latest",
     "react": "^16.13.0",
     "react-bootstrap": "^1.0.0-beta.17",
     "react-datepicker": "^2.14.1",
@@ -31,7 +33,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "react-toastify": "^5.5.0",
-    "qs": "latest"
+    "react-validation": "^3.0.7",
+    "validator": "^12.2.0"
   },
   "scripts": {
     "predeploy": "npm run build",
