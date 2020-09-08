@@ -8,7 +8,6 @@ import {NavLink} from "react-router-dom";
 
 import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import Footer from "../../Footer/Footer";
 import AuthService from "../../../services/auth.service";
 
 toast.configure();
@@ -26,6 +25,7 @@ class OfficeList extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
     }
+
     componentDidMount() {
         const user = AuthService.getCurrentUser();
         if (user) {
@@ -93,12 +93,18 @@ class OfficeList extends React.Component {
 
 
     render() {
-        const currentUser = this.state.currentUser;
+        //const currentUser = this.state.currentUser;
         return (
             <div>
                 <ResourcesMenu office={"active"}/>
 
                 <div className="container">
+                    <div className="row justify-content-center my-3">
+                        <NavLink className={"text-reset"} to={"/resources/add"}>
+                            <input type="button" className="btn btn-sm btn-outline-primary"
+                                   value="Add new resources" name="options" id="option3"/>
+                        </NavLink>
+                    </div>
                     <div className="row justify-content-center  align-items-center">
 
                         <form onSubmit={this.onFormSubmit}>
@@ -129,26 +135,7 @@ class OfficeList extends React.Component {
                         )}
                     </div>
                 </div>
-                <div className="container-fluid bg-yellow my-2" hidden={!this.state.show}>
-                    <hr/>
-                    <div className="row mb-3">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-10 col-12">
-                            <span className={"h6"}> ADMIN PANEL</span>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-10 col-12 mb-2">
-                            <NavLink className={"text-reset"} to={"/resources/add"}>
-                                <input type="button" className="btn btn-sm btn-outline-primary"
-                                       value="Add new resources" name="options" id="option3"/>
-                            </NavLink>
-                        </div>
-                    </div>
-                </div>
-                {currentUser &&
-                ((currentUser.roles[0]!=="ROLE_USER")  &&
-                    <Footer openAdmin={this.openAdmin}/>)
-                }
+
             </div>
         );
     }

@@ -51,7 +51,7 @@ const BookAdd = (props) => {
                                             </div>
                                             <div className="row">
                                                 <div className="col-md-3 text-left">
-                                                    <NavLink className={"text-reset"} to={"/resources"}>
+                                                    <NavLink className={"text-reset"} to={"/library/book"}>
                                                         <button type="button"
                                                                 className="btn btn-secondary"
                                                                 title="Back">
@@ -60,8 +60,8 @@ const BookAdd = (props) => {
                                                     </NavLink>
                                                 </div>
                                                 <div className="col-md-9 text-right">
-                                                    <button type="submit" className="btn btn-primary" title="Зачувај">
-                                                        <i className="fa fa-fw fa-save"/> Зачувај
+                                                    <button type="submit" className="btn btn-primary" title="Save">
+                                                        <i className="fa fa-fw fa-save"/> Save
                                                     </button>
                                                 </div>
                                             </div>

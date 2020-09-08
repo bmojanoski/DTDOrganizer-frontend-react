@@ -4,11 +4,9 @@ import Restaurant from "./Restaurant";
 import Order from "./Order";
 import TodayOrders from "./TodayOrders";
 import DTDService from "../../repository/axiosConsultationsRepository";
-import Footer from "../Footer/Footer";
 import Modal from "react-bootstrap/Modal";
 import AuthService from "../../services/auth.service";
 import RestaurantCarousel from "../Carousel/RestaurantCarousel";
-import {NavLink} from "react-router-dom";
 
 class Food extends Component {
     _isMounted = false;
@@ -113,7 +111,7 @@ class Food extends Component {
     };
 
     render() {
-        const currentUser = this.state.currentUser;
+        //const currentUser = this.state.currentUser;
         return (
             <div>
                 <Header/>
@@ -125,6 +123,12 @@ class Food extends Component {
                     </div>
                 </div>
                 <div className="container mt-3">
+                    <div className="row my-4">
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-10 col-12 mb-2">
+                            <button className="btn btn-sm btn-outline-primary" onClick={this.showModal}>Add restaurant
+                            </button>
+                        </div>
+                    </div>
                     <div className="row">
                         <div className="container ">
                             <div className="row justify-content-center">
@@ -160,27 +164,6 @@ class Food extends Component {
                         </div>
                     </div>
                 </div>
-
-                <div className="container-fluid  my-4" hidden={!this.state.show}>
-                    <hr/>
-                    <div className="row mb-3">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-10 col-12">
-                            <span className={"h6"}> ADMIN PANEL</span>
-                        </div>
-                    </div>
-                    <div className="row my-4">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-10 col-12 mb-2">
-                            <button className="btn btn-sm btn-outline-primary" onClick={this.showModal}>Add restaurant
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                {currentUser &&
-                ((currentUser.roles[0] !== "ROLE_USER") &&
-                    <Footer openAdmin={this.openAdmin}/>)
-                }
-
-
                 <Modal
                     show={this.state.showFoodModal}
                     onHide={this.handleCloseFoodModal}

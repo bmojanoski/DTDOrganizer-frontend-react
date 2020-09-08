@@ -1,6 +1,7 @@
 import React from 'react';
 import LibraryMenu from '../Menu/Menu'
 import Course from "./Course";
+import {NavLink} from "react-router-dom";
 
 
 const CourseList = (props) => {
@@ -11,6 +12,12 @@ const CourseList = (props) => {
             <LibraryMenu course={"active"}/>
 
             <div className="container">
+                <div className="row justify-content-center mb-3">
+                    <NavLink className={"text-reset"} to={"/library/add/courses"}>
+                        <input type="button" className="btn btn-sm btn-outline-primary"
+                               value="Add new course" name="options" id="option3"/>
+                    </NavLink>
+                </div>
                 <div className="row justify-content-center">
 
                     {props.courseList.map((course) =>

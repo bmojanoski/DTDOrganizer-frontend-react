@@ -1,6 +1,7 @@
 import React from 'react';
 import LibraryMenu from '../Menu/Menu'
 import Document from "./Document";
+import {NavLink} from "react-router-dom";
 
 
 const DocumentList = (props) => {
@@ -11,6 +12,12 @@ const DocumentList = (props) => {
             <LibraryMenu document={"active"}/>
 
             <div className="container">
+                <div className="row justify-content-center mb-3">
+                    <NavLink className={"text-reset"} to={"/library/add/documents"}>
+                        <input type="button" className="btn btn-sm btn-outline-primary"
+                               value="Add new document" name="options" id="option3"/>
+                    </NavLink>
+                </div>
                 <div className="row justify-content-center">
 
                     {props.documentList.map((document) =>
