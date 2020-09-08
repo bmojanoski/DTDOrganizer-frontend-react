@@ -7,6 +7,8 @@ import DTDService from "../../repository/axiosConsultationsRepository";
 import Footer from "../Footer/Footer";
 import Modal from "react-bootstrap/Modal";
 import AuthService from "../../services/auth.service";
+import RestaurantCarousel from "../Carousel/RestaurantCarousel";
+import {NavLink} from "react-router-dom";
 
 class Food extends Component {
     _isMounted = false;
@@ -18,7 +20,9 @@ class Food extends Component {
             orderList: [],
             show: false,
             pricerangeState: "",
-            currentUser: undefined
+            currentUser: undefined,
+            allOrdersBtn: false,
+            makeOrderBtn: true
         }
     }
 
@@ -93,32 +97,66 @@ class Food extends Component {
 
     };
 
+    seeAllOrders = (e) => {
+        this.setState({
+            allOrdersBtn: !this.state.allOrdersBtn,
+            makeOrderBtn: !this.state.makeOrderBtn
+        })
+    };
+
+    makeOrder = (e) => {
+
+        this.setState({
+            makeOrderBtn: !this.state.makeOrderBtn,
+            allOrdersBtn: !this.state.allOrdersBtn
+        })
+    };
+
     render() {
         const currentUser = this.state.currentUser;
         return (
             <div>
                 <Header/>
-                <div className="container">
-                    <div className="row justify-content-between">
-
-                        {this.props.restaurantList.map((restaurant) =>
-                            <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 my-3 " key={restaurant.id}>
-                                <Restaurant
-                                    key={restaurant.id}
-                                    restaurant={restaurant}
-                                />
-                            </div>
-                        )}
-
+                <div className="container-fluid bg-secondary carousel-div">
+                    <div className="container">
+                        <RestaurantCarousel
+                            restaurant={this.props.restaurantList}
+                        />
                     </div>
                 </div>
-                <div className="container-fluid">
+                <div className="container mt-3">
                     <div className="row">
-                        <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                            <Order restaurantList={this.props.restaurantList} onNewOrderAdded={this.loadOrders}/>
+                        <div className="container ">
+                            <div className="row justify-content-center">
+                                <div className="btn-group btn-group-toggle my-2 shadow rounded" data-toggle="buttons">
+                                    <label className={'btn btn-primary active '}>
+                                        <input type="radio"
+                                               name="options"
+                                               id={"makeOrdersBtn"}
+                                               onClick={this.makeOrder.bind(this)}
+                                               disabled={this.state.makeOrderBtn}/> Make an order
+                                    </label>
+                                    <label className={'btn btn-primary '}>
+                                        <input type="radio"
+                                               name="options"
+                                               id={"allOrdersBtn"}
+                                               onClick={this.seeAllOrders.bind(this)}
+                                               disabled={this.state.allOrdersBtn}/> See all today's orders
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                        <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    </div>
+
+                    {(this.state.makeOrderBtn) &&
+                    <Order restaurantList={this.props.restaurantList} onNewOrderAdded={this.loadOrders}/>
+                    }
+
+                    <div className="row">
+                        <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            {(this.state.allOrdersBtn) &&
                             <TodayOrders orderList={this.state.orderList}/>
+                            }
                         </div>
                     </div>
                 </div>
@@ -132,12 +170,13 @@ class Food extends Component {
                     </div>
                     <div className="row my-4">
                         <div className="col-lg-12 col-md-12 col-sm-12 col-10 col-12 mb-2">
-                            <button className="btn btn-sm btn-outline-primary" onClick={this.showModal}>Add restaurant</button>
+                            <button className="btn btn-sm btn-outline-primary" onClick={this.showModal}>Add restaurant
+                            </button>
                         </div>
                     </div>
                 </div>
                 {currentUser &&
-                ((currentUser.roles[0]!=="ROLE_USER")  &&
+                ((currentUser.roles[0] !== "ROLE_USER") &&
                     <Footer openAdmin={this.openAdmin}/>)
                 }
 
@@ -179,7 +218,8 @@ class Food extends Component {
                                                         name="pricerange"
                                                         onChange={this.handleInputChange}
                                                         className="form-control form-control-sm">
-                                                    <option defaultValue={"Choose price range"}>Choose price range</option>
+                                                    <option defaultValue={"Choose price range"}>Choose price range
+                                                    </option>
                                                     <option value="Cheap">Cheap</option>
                                                     <option value="Medium">Medium</option>
                                                     <option value="Expensive">Expensive</option>

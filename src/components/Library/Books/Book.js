@@ -22,13 +22,8 @@ const Book = (props) => {
                                 {book.authors.map((book,i) =>
                                     <p className={'small m-0'} key={i}>{book}</p>
                                 )}
-
                         </div>
 
-                        <div className="info-section text-right">
-                            <label>Rating</label>
-                            <span>{book.rating}</span>
-                        </div>
                         <div className="info-section text-right">
                             <label>Pages</label>
                             <span>{book.pages}</span>

@@ -5,7 +5,7 @@ const Material = (props) => {
 
     return (
         <div className="office-card">
-            <div className="office-header office-photo" style={ {backgroundImage: "url(" + material.image + ")"}} >
+            <div className="office-header office-photo" style={ {backgroundImage: "url(" + material.image + ")", width:100+"%", height:240}} >
             </div>
             <div className="office-content">
                 <div className="office-content-header">

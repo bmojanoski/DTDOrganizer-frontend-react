@@ -45,9 +45,9 @@ class BookDetails extends Component {
                 <Header/>{
                 this.state.books.map((book) =>
                     <div key={book.isbn}>
-                        <div className="container">
+                        <div className="container-fluid">
                             <div className="row">
-                                <div className="col-xl-6 col-md-12 col-sm-12 col-12 mb-4">
+                                <div className="col-xl-6 col-md-12 col-sm-12 col-12 mb-4 bookdetails-div bg-secondary">
                                     <div className="card border-0 my-4 ">
                                         <img alt="" src={book.imagePath}
                                              className="card-img-top  mx-auto pt-2 shadow rounded h-50 w-50"/>
@@ -65,8 +65,7 @@ class BookDetails extends Component {
                                                 <span className="mb-2">ISBN: {book.isbn}</span>
                                             </div>
                                             <div className="text-left">
-                                                <span className=""><i className="fa fa-star "/> {book.rating}</span>
-                                                <span className="pl-4"><i className="fa fa-book"/> {book.pages}</span>
+                                                <span><i className="fa fa-book"/> {book.pages}</span>
                                                 <span className="pl-4"><i
                                                     className="fa fa-calendar"/> {book.publishedDate}</span>
                                             </div>

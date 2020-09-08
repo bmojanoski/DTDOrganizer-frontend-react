@@ -109,7 +109,7 @@ class UtilityList extends React.Component {
                     <div className="row justify-content-center">
 
                         {this.props.utilitiesList.map((utility) =>
-                            <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 mb-3 " key={utility.id}>
+                            <div className="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-3 " key={utility.id}>
 
                                 <div className="mt-3 mb-2">
                                     <Checkbox name={utility.name}

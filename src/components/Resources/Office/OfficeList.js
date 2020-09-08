@@ -113,7 +113,7 @@ class OfficeList extends React.Component {
                     <div className="row justify-content-center">
 
                         {this.props.officeList.map((office) =>
-                            <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 mb-3 " key={office.id}>
+                            <div className="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3  mb-3 " key={office.id}>
 
                                 <div className="mt-3 mb-2">
                                     <Checkbox name={office.name}

@@ -20,6 +20,9 @@ import Food from "../Food/Food";
 import About from "../About/About";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
+import Error404 from "../Error/error404";
+import AuthService from "../../services/auth.service";
+import RestaurantCarousel from "../Carousel/RestaurantCarousel";
 
 class App extends Component {
     _isMounted = false;
@@ -35,7 +38,8 @@ class App extends Component {
             wMaterialsList: [],
             utilitiesList: [],
             eventsList: [],
-            restaurantList: []
+            restaurantList: [],
+            currentUser: undefined
         }
     }
 
@@ -45,14 +49,20 @@ class App extends Component {
 
     componentDidMount() {
         this._isMounted = true;
+        const user = AuthService.getCurrentUser();
 
-        this.loadBooks();
-        this.loadCourses();
-        this.loadDocuments();
-        this.loadOffice();
-        this.loadWorkMaterials();
-        this.loadUtilities();
-        this.loadRestaurants();
+        if (user) {
+            this.setState({
+                currentUser: user,
+            });
+            this.loadBooks();
+            this.loadCourses();
+            this.loadDocuments();
+            this.loadOffice();
+            this.loadWorkMaterials();
+            this.loadUtilities();
+            this.loadRestaurants();
+        }
     }
 
     //RESTAURANTS
@@ -216,6 +226,7 @@ class App extends Component {
     };
 
     render() {
+        const currentUser = this.state.currentUser;
         const state = {
             bookList: this.state.bookList
         };
@@ -243,67 +254,90 @@ class App extends Component {
             <Router>
                 <Switch>
                     {/*CALENDAR*/}
+                    {(currentUser) &&
                     <Route path={"/calendar"} exact render={() =>
                         <Calendar events={this.state.eventsList}/>}>
                     </Route>
-
+                    }
                     {/*RESOURCES*/}
+                    {(currentUser) &&
                     <Route path={"/resources/"} exact render={() =>
                         <OfficeList {...officeState} onNewRequest={this.addRequest}/>}>
                     </Route>
+                    }
+                    {(currentUser) &&
                     <Route path={"/resources/add"} exact render={() =>
                         <ResourcesAdd onNewResourcesAdded={this.addResource}/>}>
                     </Route>
+                    }
                     {/*OFFICE*/}
+                    {(currentUser) &&
                     <Route path={"/resources/office"} exact render={() =>
                         <OfficeList {...officeState} onNewRequest={this.addRequest}/>}>
                     </Route>
+                    }
                     {/*WorkMaterials*/}
+                    {(currentUser) &&
                     <Route path={"/resources/materials"} exact render={() =>
                         <MaterialList {...materialState} onNewRequest={this.addRequest}/>}>
                     </Route>
+                    }
                     {/*Utilities*/}
+                    {(currentUser) &&
                     <Route path={"/resources/utilities"} exact render={() =>
                         <UtilityList {...utilityState} onNewRequest={this.addRequest}/>}>
                     </Route>
-
+                    }
 
                     {/*LIBRARY*/}
+                    {(currentUser) &&
                     <Route path={"/library/"} exact render={() =>
                         <BookList {...state} />}>
                     </Route>
-
+                    }
                     {/*BOOKS*/}
+                    {(currentUser) &&
                     <Route path={"/library/book"} exact render={() =>
                         <BookList {...state} />}>
                     </Route>
+                    }
+                    {(currentUser) &&
                     <Route path={"/library/book/:isbn"} component={BookDetails}/>
-
+                    }
+                    {(currentUser) &&
                     <Route path={"/library/add/book"} exact render={() =>
                         <BookAdd onNewBookAdded={this.addBook}/>}>
                     </Route>
+                    }
 
                     {/*COURSES*/}
+                    {(currentUser) &&
                     <Route path={"/library/courses"} exact render={() =>
                         <CourseList {...coursesState} />}>
                     </Route>
+                    }
+                    {(currentUser) &&
                     <Route path={"/library/add/courses"} exact render={() =>
                         <CourseAdd onNewCourseAdded={this.addCourse}/>}>
                     </Route>
-
+                    }
                     {/*DOCUMENTS*/}
+                    {(currentUser) &&
                     <Route path={"/library/documents"} exact render={() =>
                         <DocumentList {...documentsState}/>}>
                     </Route>
+                    }
+                    {(currentUser) &&
                     <Route path={"/library/add/documents"} exact render={() =>
                         <DocumentAdd onNewDocumentAdded={this.addDocument}/>}>
                     </Route>
-
+                    }
                     {/*FOOD*/}
-                    <Route path={"/food"} exact render={() =>
+                    {(currentUser) &&
+                        <Route path={"/food"} exact render={() =>
                         <Food {...restaurantState} onNewRestaurantAdded={this.addRestaurant}/>}>
-                    </Route>
-
+                        </Route>
+                    }
                     {/*HOME PAGE*/}
                     <Route path={"/"} exact render={() =>
                         <Home/>}>
@@ -314,16 +348,19 @@ class App extends Component {
                         <About/>}>
                     </Route>
 
-                    {/*<Route path={"/login"} exact render={(props) =>*/}
-                    {/*    <Login {...this.props} />}>*/}
-                    {/*</Route>*/}
                     <Route exact path="/login" component={Login}/>
 
                     <Route path={"/register"} exact render={() =>
                         <Register/>}>
                     </Route>
 
-                    <Redirect to="/"/>
+                    <Route path={"/404"} exact render={() =>
+                        <Error404/>}>
+                    </Route>
+                    <Route path={"/carousel"} exact render={() =>
+                        <RestaurantCarousel/>}>
+                    </Route>
+                    <Redirect to="/404"/>
                 </Switch>
             </Router>
         );

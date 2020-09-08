@@ -8,6 +8,7 @@
 }
 
 .App {
+    height: 100vh;
     text-align: center;
 }
 
@@ -223,6 +224,23 @@ label.btn.btn-primary.active {
     width: 100%;
 }
 
+.error404 {
+    background: url(https://i.ibb.co/1bwmXcq/404-01.png) no-repeat;
+    float: left;
+    height: 80vh;
+    width: 100%;
+    position: absolute;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.error404-text {
+    font-family: CrayonKids;
+    font-size: 30px;
+    color: #5ad4ff;
+}
 
 .intro {
     background: url(https://i.ibb.co/tKkTzVK/background-01.png) no-repeat;
@@ -230,7 +248,28 @@ label.btn.btn-primary.active {
     height: 100vh;
     width: 100%;
     position: absolute;
-
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+.login {
+    background: url(https://i.ibb.co/nQ1r3L1/login-01.png) no-repeat;
+    float: left;
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+.register-back {
+    background: url(https://i.ibb.co/Y8t4gpV/register-01.png) no-repeat;
+    float: left;
+    height: 100vh;
+    width: 100%;
+    position: absolute;
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -251,6 +290,18 @@ label.btn.btn-primary.active {
     width: 37%;
 }
 
+.login-text {
+    font-family: CrayonKids;
+    font-size: 70px;
+    color: white;
+    text-align: left;
+}
+.login-smaller {
+    font-family: CrayonKids;
+    font-size: 25px;
+    color: white;
+    text-align: left;
+}
 @media only screen and (max-width: 700px) {
     .intro {
         background: url(https://i.ibb.co/Jr0FydZ/back-sm-01.png) no-repeat;
@@ -325,3 +376,14 @@ label.btn.btn-primary.active {
 .btn-round { border-radius: 30px;}
 .bg-indigo {background: indigo;}
 .text-cyan { color: #35bdff;}
+
+.carousel-div{
+    border-bottom-right-radius:20%;
+    border-bottom-left-radius:20%;
+}
+
+
+.bookdetails-div{
+    border-bottom-right-radius:30%;
+    border-bottom-left-radius:30%;
+}

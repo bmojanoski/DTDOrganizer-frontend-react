@@ -1,9 +1,30 @@
 import React, { Component } from 'react';
 import { NavLink,Link  } from "react-router-dom";
+import AuthService from "../../services/auth.service";
 
 
   class Header extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        currentUser: undefined
+      };
+    }
+
+    componentDidMount() {
+      const user = AuthService.getCurrentUser();
+      if (user) {
+        this.setState({
+          currentUser: user,
+        });
+      }
+    }
+    logOut() {
+      AuthService.logout();
+    }
+
   render() {
+    const currentUser = this.state.currentUser;
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-header  navbar-fixed sticky-top shadow">
           <div className="container">
@@ -21,30 +42,56 @@ import { NavLink,Link  } from "react-router-dom";
 
               <ul className="navbar-nav mt-2 mt-lg-0" >
                 <li className="nav-item">
-                  <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/home"} >Home</NavLink>
+                  <NavLink className="nav-link text-menu-size" activeClassName="active" exact to={"/"} >Home</NavLink>
                 </li>
+                {(currentUser) &&
                 <li className="nav-item">
-                  <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/calendar"} >Calendar</NavLink>
+                  <NavLink className="nav-link text-menu-size" activeClassName="active"
+                           to={"/calendar"}>Calendar</NavLink>
                 </li>
+                }
+
+                {(currentUser) &&
                 <li className="nav-item">
-                  <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/resources"}>Resources</NavLink>
+                  <NavLink className="nav-link text-menu-size" activeClassName="active"
+                           to={"/resources"}>Resources</NavLink>
                 </li>
+                }
+                {(currentUser) &&
                 <li className="nav-item ">
-                  <NavLink className= "nav-link text-menu-size" activeClassName="active" to={"/library"}>Library</NavLink>
+                  <NavLink className="nav-link text-menu-size" activeClassName="active"
+                           to={"/library"}>Library</NavLink>
                 </li>
+                }
+                {(currentUser) &&
                 <li className="nav-item ">
                   <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/food"}>Food</NavLink>
                 </li>
+                }
                 <li className="nav-item ">
-                  <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/about"}>About</NavLink>
+                  <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/about"}>About us</NavLink>
                 </li>
-
+                {(currentUser) &&
+                <li className="nav-item ">
+                  <NavLink className="nav-link text-menu-size btn btn-outline-secondary"
+                           activeClassName="active"
+                           onClick={this.logOut}
+                           to={"/login"}>
+                    Log out
+                  </NavLink>
+                </li>
+                }
+                {(!currentUser) &&
+                <li className="nav-item ">
+                  <NavLink className="nav-link text-menu-size btn btn-outline-secondary"
+                           activeClassName="active"
+                           to={"/login"}>
+                    Log in
+                  </NavLink>
+                </li>
+                }
               </ul>
             </div>
-            {/* <form className="form-inline mt-2 mt-md-0 ml-3">
-                  <Link className="btn btn-outline-info my-2 my-sm-0" to={"/login"}>Login</Link>
-              </form> */}
-
           </div>
         </nav>
     );

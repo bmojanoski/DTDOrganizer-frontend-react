@@ -84,13 +84,13 @@ class FrontHeader extends Component {
                                         <li className="nav-item ">
                                             <NavLink className="nav-link mr-3 text-prim font-weight-bold"
                                                      activeClassName="active"
-                                                     to={"/about"}>About</NavLink>
+                                                     to={"/about"}>About us</NavLink>
                                         </li>
 
                                         <li className="nav-item ">
 
                                             <NavLink
-                                                className="nav-link text-prim font-weight-bold btn btn-outline-secondary"
+                                                className="btn btn-outline-primary mr-3  font-weight-bold"
                                                 activeClassName="active"
                                                 onClick={this.logOut}
                                                 to={"/login"}>LogOut</NavLink>
@@ -99,14 +99,17 @@ class FrontHeader extends Component {
                                     </>
                                 ) : (
                                     <>
+
                                         <li className="nav-item ">
-                                            <NavLink className="nav-link mr-3 ml-5 text-prim font-weight-bold "
+                                            <NavLink className="btn btn-outline-primary mr-3 ml-5  font-weight-bold"
+                                                     style={{width: 80}}
                                                      activeClassName="active"
                                                      to={"/login"}>Login</NavLink>
                                         </li>
 
                                         <li className="nav-item ">
-                                            <NavLink className="nav-link mr-3 ml-5 text-prim font-weight-bold"
+                                            <NavLink className="btn btn-primary mr-3 ml-3  font-weight-bold shadow"
+                                                     style={{width: 80}}
                                                      activeClassName="active"
                                                      to={"/register"}>Sign Up</NavLink>
                                         </li>
