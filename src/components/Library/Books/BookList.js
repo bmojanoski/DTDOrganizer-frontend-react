@@ -22,29 +22,27 @@ class BookList extends React.Component {
         if (user) {
             this.setState({
                 currentUser: user,
+                currentUserRole : user.roles[0]
             });
 
         }
     }
 
-    openAdmin = () => {
-        this.setState({show: !this.state.show})
-    };
-
     render() {
-        //const currentUser = this.state.currentUser;
+        const currentUserRole = this.state.currentUserRole !== "ROLE_USER";
         return (
             <div>
 
                 <LibraryMenu book={"active"}/>
 
                 <div className="container">
+                    {(currentUserRole) && (
                     <div className="row justify-content-center mb-3">
                         <NavLink className={"text-reset"} to={"/library/add/book"}>
                             <input type="button" className="btn btn-sm btn-outline-primary"
                                    value="Add new book" name="options" id="option3"/>
                         </NavLink>
-                    </div>
+                    </div>)}
                     <div className="row justify-content-center">
                         {this.props.bookList.map((book) =>
                             <div className="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-3 " key={book.isbn}>

@@ -30,6 +30,7 @@ class UtilityList extends React.Component {
         if (user) {
             this.setState({
                 currentUser: user,
+                currentUserRole : user.roles[0]
             });
 
         }
@@ -56,7 +57,8 @@ class UtilityList extends React.Component {
             var name = ai.toString();
             const newRequest = {
                 "request_name": name,
-                "id": this.state.checkedIds
+                "id": this.state.checkedIds,
+                "user_id": this.state.currentUser.id
             };
             this.props.onNewRequest(newRequest);
             this.setState(prevState => ({checkedItems: prevState.checkedItems = new Map()}));
@@ -88,18 +90,12 @@ class UtilityList extends React.Component {
     };
 
     render() {
-        // const currentUser = this.state.currentUser;
+        // const currentUserRole = this.state.currentUserRole !== "ROLE_USER";
         return (
             <div>
                 <ResourcesMenu utilities={"active"}/>
 
                 <div className="container">
-                    <div className="row my-3 justify-content-center">
-                        <NavLink className={"text-reset"} to={"/resources/add"}>
-                            <input type="button" className="btn btn-sm btn-outline-primary"
-                                   value="Add new resources" name="options" id="option3"/>
-                        </NavLink>
-                    </div>
                     <div className="row justify-content-center  align-items-center">
                         <div className="col-12 p-0 text-center">
                             <form onSubmit={this.onFormSubmit}>
@@ -130,6 +126,13 @@ class UtilityList extends React.Component {
                                 />
                             </div>
                         )}
+                    </div>
+                    <div className="row my-3 justify-content-center align-items-center ">
+                        <div>Haven't found what you're looking for?</div>
+                        <NavLink className={"text-reset ml-2"} to={"/resources/add"}>
+                            <input type="button" className="btn btn-sm btn-outline-primary"
+                                   value="Add new resources here" name="options" id="option3"/>
+                        </NavLink>
                     </div>
                 </div>
             </div>

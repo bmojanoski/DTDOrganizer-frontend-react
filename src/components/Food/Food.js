@@ -31,6 +31,7 @@ class Food extends Component {
         if (user) {
             this.setState({
                 currentUser: user,
+                currentUserRole : user.roles[0]
             });
 
         }
@@ -111,7 +112,7 @@ class Food extends Component {
     };
 
     render() {
-        //const currentUser = this.state.currentUser;
+        const currentUserRole = this.state.currentUserRole !== "ROLE_USER";
         return (
             <div>
                 <Header/>
@@ -123,12 +124,13 @@ class Food extends Component {
                     </div>
                 </div>
                 <div className="container mt-3">
+                    {(currentUserRole) && (
                     <div className="row my-4">
                         <div className="col-lg-12 col-md-12 col-sm-12 col-10 col-12 mb-2">
                             <button className="btn btn-sm btn-outline-primary" onClick={this.showModal}>Add restaurant
                             </button>
                         </div>
-                    </div>
+                    </div>)}
                     <div className="row">
                         <div className="container ">
                             <div className="row justify-content-center">

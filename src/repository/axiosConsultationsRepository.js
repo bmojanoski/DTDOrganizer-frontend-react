@@ -7,6 +7,20 @@ const API_URL = 'http://localhost:8080/api/v1/';
 
 const DTDService = {
 
+    deleteRequest: (id)=> {
+        return axios.post("/api/v1/requests",id,{
+            headers:{
+                'Content-Type' : 'application/json'
+            }
+        });
+    },
+
+    fetchRequests: ()=> {
+        return axios.get(API_URL + 'requests', { headers: authHeader() });
+    },
+    fetchUsers: ()=> {
+        return axios.get(API_URL + 'users', { headers: authHeader() });
+    },
     // FOOD
     fetchRestaurants: ()=> {
         return axios.get(API_URL + 'restaurants');

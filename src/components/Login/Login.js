@@ -150,7 +150,10 @@ export default class Login extends Component {
                                     {this.state.loading && (
                                         <span className="spinner-border spinner-border-sm"/>
                                     )}
-                                    <span>Login</span>
+                                    {!this.state.loading && (
+                                        <span>Login</span>
+                                    )}
+
                                 </button>
                                 <div className=" form-row justify-content-center">
                                     <div className={"text-color-primary mt-3"}>New user?</div>

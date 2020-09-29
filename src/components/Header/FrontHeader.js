@@ -27,6 +27,7 @@ class FrontHeader extends Component {
         if (user) {
             this.setState({
                 currentUser: user,
+                currentUserRole : user.roles[0]
             });
         }
     }
@@ -37,6 +38,7 @@ class FrontHeader extends Component {
 
     render() {
         const currentUser = this.state.currentUser;
+        const currentUserRole = this.state.currentUserRole === "ROLE_ADMIN";
         return (
             <header>
                 <nav className="navbar navbar-expand-lg navbar-light bg-transparent fixed-top">
@@ -81,6 +83,20 @@ class FrontHeader extends Component {
                                                      activeClassName="active"
                                                      to={"/food"}>Food</NavLink>
                                         </li>
+                                        {(currentUserRole) &&
+                                            <li className="nav-item ">
+                                            <NavLink className="nav-link mr-3 text-prim font-weight-bold"
+                                            activeClassName="active"
+                                            to={"/users"}>Users</NavLink>
+                                            </li>
+                                        }
+                                        {(currentUserRole) &&
+                                        <li className="nav-item ">
+                                            <NavLink className="nav-link mr-3 text-prim font-weight-bold"
+                                                     activeClassName="active"
+                                                     to={"/requests"}>Requests</NavLink>
+                                        </li>
+                                        }
                                         <li className="nav-item ">
                                             <NavLink className="nav-link mr-3 text-prim font-weight-bold"
                                                      activeClassName="active"

@@ -23,6 +23,9 @@ import Login from "../Login/Login";
 import Error404 from "../Error/error404";
 import AuthService from "../../services/auth.service";
 import RestaurantCarousel from "../Carousel/RestaurantCarousel";
+import Users from "../Users/Users";
+import Request from "../Resources/Request";
+
 
 class App extends Component {
     _isMounted = false;
@@ -39,6 +42,8 @@ class App extends Component {
             utilitiesList: [],
             eventsList: [],
             restaurantList: [],
+            usersList: [],
+            requestsList:[],
             currentUser: undefined
         }
     }
@@ -62,6 +67,8 @@ class App extends Component {
             this.loadWorkMaterials();
             this.loadUtilities();
             this.loadRestaurants();
+            this.loadUsers();
+            this.loadRequests();
         }
     }
 
@@ -159,6 +166,23 @@ class App extends Component {
         })
     };
 
+    //Users.js
+    loadUsers = () => {
+        DTDService.fetchUsers().then((response) => {
+            this.setState({
+                usersList: response.data
+            });
+        });
+    };
+
+    loadRequests = () => {
+        DTDService.fetchRequests().then((response) => {
+            this.setState({
+                requestsList: response.data
+            });
+        });
+    };
+
     //OFFICE
     loadOffice = () => {
         DTDService.fetchOffice().then((response) => {
@@ -249,7 +273,12 @@ class App extends Component {
         const restaurantState = {
             restaurantList: this.state.restaurantList
         };
-
+        const usersState = {
+            usersList: this.state.usersList
+        };
+        const requestsState = {
+            requestsList: this.state.requestsList
+        };
 
         const routing = (
             <Router>
@@ -290,13 +319,24 @@ class App extends Component {
                     </Route>
                     }
 
-                    {/*LIBRARY*/}
+                    {(currentUser) &&
+                    <Route path={"/users"} exact render={() =>
+                        <Users {...usersState}/>}>
+                    </Route>
+                    }
+
+                    {(currentUser) &&
+                    <Route path={"/requests"} exact render={() =>
+                        <Request {...requestsState}/>}>
+                    </Route>
+                    }
+
                     {(currentUser) &&
                     <Route path={"/library/"} exact render={() =>
                         <BookList {...state} />}>
                     </Route>
                     }
-                    {/*BOOKS*/}
+
                     {(currentUser) &&
                     <Route path={"/library/book"} exact render={() =>
                         <BookList {...state} />}>
@@ -311,7 +351,6 @@ class App extends Component {
                     </Route>
                     }
 
-                    {/*COURSES*/}
                     {(currentUser) &&
                     <Route path={"/library/courses"} exact render={() =>
                         <CourseList {...coursesState} />}>
@@ -322,7 +361,7 @@ class App extends Component {
                         <CourseAdd onNewCourseAdded={this.addCourse}/>}>
                     </Route>
                     }
-                    {/*DOCUMENTS*/}
+
                     {(currentUser) &&
                     <Route path={"/library/documents"} exact render={() =>
                         <DocumentList {...documentsState}/>}>
@@ -339,12 +378,11 @@ class App extends Component {
                         <Food {...restaurantState} onNewRestaurantAdded={this.addRestaurant}/>}>
                         </Route>
                     }
-                    {/*HOME PAGE*/}
+
                     <Route path={"/"} exact render={() =>
                         <Home/>}>
                     </Route>
 
-                    {/*ABOUT PAGE*/}
                     <Route path={"/about"} exact render={() =>
                         <About/>}>
                     </Route>

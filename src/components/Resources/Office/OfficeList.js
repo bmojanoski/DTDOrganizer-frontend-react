@@ -31,8 +31,8 @@ class OfficeList extends React.Component {
         if (user) {
             this.setState({
                 currentUser: user,
+                currentUserRole : user.roles[0]
             });
-
         }
     }
 
@@ -57,7 +57,8 @@ class OfficeList extends React.Component {
             let name = aii.toString();
             const newRequest = {
                 "request_name": name,
-                "id": this.state.checkedIds
+                "id": this.state.checkedIds,
+                "user_id": this.state.currentUser.id
             };
 
             this.props.onNewRequest(newRequest);
@@ -93,18 +94,13 @@ class OfficeList extends React.Component {
 
 
     render() {
-        //const currentUser = this.state.currentUser;
+        // const currentUserRole = this.state.currentUserRole === "ROLE_USER";
+
         return (
             <div>
                 <ResourcesMenu office={"active"}/>
 
                 <div className="container">
-                    <div className="row justify-content-center my-3">
-                        <NavLink className={"text-reset"} to={"/resources/add"}>
-                            <input type="button" className="btn btn-sm btn-outline-primary"
-                                   value="Add new resources" name="options" id="option3"/>
-                        </NavLink>
-                    </div>
                     <div className="row justify-content-center  align-items-center">
 
                         <form onSubmit={this.onFormSubmit}>
@@ -133,6 +129,13 @@ class OfficeList extends React.Component {
                                 />
                             </div>
                         )}
+                    </div>
+                    <div className="row justify-content-center align-items-center my-3">
+                        <div>Haven't found what you're looking for?</div>
+                        <NavLink className={"text-reset ml-2"} to={"/resources/add"}>
+                            <input type="button" className="btn btn-sm btn-outline-primary"
+                                   value="Add new resources here" name="options" id="option3"/>
+                        </NavLink>
                     </div>
                 </div>
 

@@ -16,6 +16,7 @@ import AuthService from "../../services/auth.service";
       if (user) {
         this.setState({
           currentUser: user,
+            currentUserRole : user.roles[0]
         });
       }
     }
@@ -25,6 +26,7 @@ import AuthService from "../../services/auth.service";
 
   render() {
     const currentUser = this.state.currentUser;
+    const currentUserRole = this.state.currentUserRole === "ROLE_ADMIN";
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-header  navbar-fixed sticky-top shadow">
           <div className="container">
@@ -66,6 +68,16 @@ import AuthService from "../../services/auth.service";
                 {(currentUser) &&
                 <li className="nav-item ">
                   <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/food"}>Food</NavLink>
+                </li>
+                }
+                {(currentUserRole) &&
+                <li className="nav-item ">
+                  <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/users"}>Users</NavLink>
+                </li>
+                }
+                {(currentUserRole) &&
+                <li className="nav-item ">
+                  <NavLink className="nav-link text-menu-size" activeClassName="active" to={"/requests"}>Requests</NavLink>
                 </li>
                 }
                 <li className="nav-item ">

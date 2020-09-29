@@ -2,39 +2,61 @@ import React from 'react';
 import LibraryMenu from '../Menu/Menu'
 import Document from "./Document";
 import {NavLink} from "react-router-dom";
+import AuthService from "../../../services/auth.service";
 
 
-const DocumentList = (props) => {
+class DocumentList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentUser: undefined
+        }
+    }
 
-    return (
-        <div>
+    componentDidMount() {
+        const user = AuthService.getCurrentUser();
+        if (user) {
+            this.setState({
+                currentUser: user,
+                currentUserRole: user.roles[0]
+            });
 
-            <LibraryMenu document={"active"}/>
+        }
+    }
 
-            <div className="container">
-                <div className="row justify-content-center mb-3">
-                    <NavLink className={"text-reset"} to={"/library/add/documents"}>
-                        <input type="button" className="btn btn-sm btn-outline-primary"
-                               value="Add new document" name="options" id="option3"/>
-                    </NavLink>
-                </div>
-                <div className="row justify-content-center">
+    render() {
+        const currentUserRole = this.state.currentUserRole !== "ROLE_USER";
+        return (
+            <div>
 
-                    {props.documentList.map((document) =>
-                        <div className="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-3 " key={document.id}>
+                <LibraryMenu document={"active"}/>
 
-                            <Document
-                                key={document.id}
-                                document={document}
-                            />
-
-                        </div>
+                <div className="container">
+                    {(currentUserRole) && (
+                    <div className="row justify-content-center mb-3">
+                        <NavLink className={"text-reset"} to={"/library/add/documents"}>
+                            <input type="button" className="btn btn-sm btn-outline-primary"
+                                   value="Add new document" name="options" id="option3"/>
+                        </NavLink>
+                    </div>
                     )}
+                    <div className="row justify-content-center">
+
+                        {this.props.documentList.map((document) =>
+                            <div className="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-3 " key={document.id}>
+
+                                <Document
+                                    key={document.id}
+                                    document={document}
+                                />
+
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
-        </div>
-    );
-
-};
+        )
+    }
+}
 
 export default DocumentList;

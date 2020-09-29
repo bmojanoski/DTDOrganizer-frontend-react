@@ -4,7 +4,7 @@
 
 @font-face {
     font-family: 'CrayonKids';
-    src: local('crayonkids'), url("../../crayon kids.ttf") format('truetype');
+    src: local('crayonkids'), url("../../fonts/crayon kids.ttf") format('truetype');
 }
 
 .App {
